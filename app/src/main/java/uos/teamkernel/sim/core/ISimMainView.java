@@ -1,24 +1,10 @@
 package uos.teamkernel.sim.core;
 
 import java.awt.event.ActionListener;
-import uos.teamkernel.map.IMapModel;
-import uos.teamkernel.robot.IMobileRobotModel;
 
-public interface ISimMainView {
+import uos.teamkernel.common.IModelObserver;
 
-    /**
-     * update the change of map model to this view
-     * 
-     * @param mapModel the map model to update
-     */
-    void updateMapModelChange(IMapModel mapModel);
-
-    /**
-     * update the change of mobile robot model to this view
-     * 
-     * @param mobileRobotModel the mobile robot model to update
-     */
-    void updateMobileRobotModelChange(IMobileRobotModel mobileRobotModel);
+public interface ISimMainView extends IModelObserver {
 
     /**
      * add step button listener
