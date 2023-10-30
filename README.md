@@ -8,4 +8,5 @@
 
 ## 문서
 
+- [프로젝트 계획서](./docs/project-plan.pdf)
 - [개발 환경 구축](./docs/build-environment.md)
