@@ -1,9 +1,14 @@
 {
   "java.project.sourcePaths": ["app/src/main/java"],
+  "java.compile.nullAnalysis.mode": "automatic",
+  "java.configuration.updateBuildConfiguration": "interactive",
+  "java.project.explorer.showNonJavaResources": false,
   "java.format.settings.url": ".vscode/java-formatter.xml",
   "[java]": {
-    "editor.insertSpaces": true
+    "editor.defaultFormatter": "redhat.java"
   },
-  "editor.defaultFormatter": "redhat.java",
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   "editor.formatOnSave": true
 }
