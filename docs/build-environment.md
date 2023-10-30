@@ -76,3 +76,20 @@ gradle init
 
 - 애플리케이션 실행: `./gradlew run`
 - 애플리케이션 묶기: `./gradlew build`
+
+## 최종 개발 환경
+
+- 아래의 패키지를 설치하여야 한다.
+
+  - Microsoft Visual Studio Code(vscode)
+  - OpenJDK 17
+  - Gradle
+
+- vscode에서 사용하는 Extension은 다음과 같다.
+
+  - [Extension Pack for Java](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-pack)
+  - [Gradle for Java](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-gradle)
+
+## 참고 사항
+
+- 원래 계획으로는 OpenJDK 21 버전을 이용하려고 했지만, vscode의 Project Manager for Java Extension과 잘 호환이 안되는 것 같아 17 버전으로 내렸음. 17 버전은 11 버전 다음으로의 LTS라고 함([참고](https://en.wikipedia.org/wiki/Java_version_history#Java_17)).
