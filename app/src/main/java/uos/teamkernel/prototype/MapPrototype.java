@@ -1,9 +1,10 @@
-package uos.teamkernel.map;
+package uos.teamkernel.prototype;
 
 import java.awt.Point;
 import java.util.ArrayList;
-import uos.teamkernel.common.IModelObserver;
 import uos.teamkernel.common.Spot;
+import uos.teamkernel.model.IMapModel;
+import uos.teamkernel.model.IModelObserver;
 
 public class MapPrototype implements IMapModel {
 

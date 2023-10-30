@@ -2,9 +2,8 @@ package uos.teamkernel.prototype;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
-
-import uos.teamkernel.map.IMapModel;
-import uos.teamkernel.robot.IMobileRobotModel;
+import uos.teamkernel.model.IMapModel;
+import uos.teamkernel.model.IMobileRobotModel;
 import uos.teamkernel.sim.core.ISimMainView;
 
 class SimMainViewPrototype extends JFrame implements ISimMainView {

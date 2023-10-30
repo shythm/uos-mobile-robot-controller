@@ -1,7 +1,5 @@
 package uos.teamkernel.prototype;
 
-import uos.teamkernel.robot.MobileRobotPrototype;
-import uos.teamkernel.map.MapPrototype;
 import uos.teamkernel.sim.core.SimController;
 
 public class AppPrototype {

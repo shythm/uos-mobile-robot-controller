@@ -1,7 +1,7 @@
 package uos.teamkernel.sim.core;
 
-import uos.teamkernel.robot.IMobileRobotModel;
-import uos.teamkernel.map.IMapModel;
+import uos.teamkernel.model.IMapModel;
+import uos.teamkernel.model.IMobileRobotModel;
 
 public interface ISimAddOn<T> {
 

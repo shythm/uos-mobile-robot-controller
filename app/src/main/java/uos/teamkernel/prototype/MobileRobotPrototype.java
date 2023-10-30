@@ -1,10 +1,10 @@
-package uos.teamkernel.robot;
+package uos.teamkernel.prototype;
 
 import java.awt.Point;
 import java.util.ArrayList;
-
 import uos.teamkernel.common.Direction;
-import uos.teamkernel.common.IModelObserver;
+import uos.teamkernel.model.IMobileRobotModel;
+import uos.teamkernel.model.IModelObserver;
 
 public class MobileRobotPrototype implements IMobileRobotModel {
 

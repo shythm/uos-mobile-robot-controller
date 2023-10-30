@@ -2,8 +2,8 @@ package uos.teamkernel.sim.core;
 
 import java.awt.Point;
 import uos.teamkernel.common.Direction;
-import uos.teamkernel.map.IMapModel;
-import uos.teamkernel.robot.IMobileRobotModel;
+import uos.teamkernel.model.IMapModel;
+import uos.teamkernel.model.IMobileRobotModel;
 
 public class SimController {
 

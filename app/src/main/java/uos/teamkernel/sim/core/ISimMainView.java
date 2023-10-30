@@ -1,8 +1,7 @@
 package uos.teamkernel.sim.core;
 
 import java.awt.event.ActionListener;
-
-import uos.teamkernel.common.IModelObserver;
+import uos.teamkernel.model.IModelObserver;
 
 public interface ISimMainView extends IModelObserver {
 

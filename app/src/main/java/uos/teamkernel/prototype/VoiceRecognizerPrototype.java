@@ -2,8 +2,8 @@ package uos.teamkernel.prototype;
 
 import java.awt.Point;
 import uos.teamkernel.common.Spot;
-import uos.teamkernel.map.IMapModel;
-import uos.teamkernel.robot.IMobileRobotModel;
+import uos.teamkernel.model.IMapModel;
+import uos.teamkernel.model.IMobileRobotModel;
 import uos.teamkernel.sim.core.ISimAddOn;
 
 public class VoiceRecognizerPrototype implements ISimAddOn<Void> {

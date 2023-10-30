@@ -1,4 +1,4 @@
-package uos.teamkernel.common;
+package uos.teamkernel.model;
 
 public interface IModelObserver {
 
