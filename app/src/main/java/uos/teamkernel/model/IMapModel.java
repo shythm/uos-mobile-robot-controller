@@ -21,4 +21,18 @@ public interface IMapModel extends IModelObservable {
      */
     void setSpot(Point position, Spot spot);
 
+    /**
+     * Get the width of the map
+     * 
+     * @return The width of the map
+     */
+    int getWidth();
+
+    /**
+     * Get the height of the map
+     * 
+     * @return The height of the map
+     */
+    int getHeight();
+
 }

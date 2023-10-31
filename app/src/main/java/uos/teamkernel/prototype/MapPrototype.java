@@ -25,6 +25,14 @@ public class MapPrototype implements IMapModel {
         notifyObservers(); // notify observers that the state of model has changed
     }
 
+    public int getWidth() {
+        return map.length;
+    }
+
+    public int getHeight() {
+        return map[0].length;
+    }
+
     /* below is for observer pattern */
 
     private void notifyObservers() {
