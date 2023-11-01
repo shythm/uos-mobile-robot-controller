@@ -1,9 +1,9 @@
 package uos.teamkernel.sim.core;
 
-import uos.teamkernel.model.IMapModel;
-import uos.teamkernel.model.IMobileRobotModel;
+import uos.teamkernel.model.MapModel;
+import uos.teamkernel.model.MobileRobotModel;
 
-public interface ISimAddOn<T> {
+public interface SimAddOn<T> {
 
     /**
      * Do additional control to the simulator and return the target direction to
@@ -13,6 +13,6 @@ public interface ISimAddOn<T> {
      * @param next the direction to move in this step
      * @return new direction to move in this step
      */
-    T call(IMobileRobotModel mobileRobot, IMapModel map);
+    T call(MobileRobotModel mobileRobot, MapModel map);
 
 }

@@ -1,6 +1,6 @@
 package uos.teamkernel.model;
 
-public interface IModelObserver {
+public interface ModelObserver {
 
     /**
      * Notify the observer that the model has changed

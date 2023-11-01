@@ -3,7 +3,7 @@ package uos.teamkernel.model;
 import java.awt.Point;
 import uos.teamkernel.common.Spot;
 
-public interface IMapModel extends IModelObservable {
+public interface MapModel extends ModelObservable {
 
     /**
      * Get the type of spot at position

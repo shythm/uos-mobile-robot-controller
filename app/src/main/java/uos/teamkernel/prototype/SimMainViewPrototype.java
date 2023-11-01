@@ -2,11 +2,11 @@ package uos.teamkernel.prototype;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
-import uos.teamkernel.model.IMapModel;
-import uos.teamkernel.model.IMobileRobotModel;
-import uos.teamkernel.sim.core.ISimMainView;
+import uos.teamkernel.model.MapModel;
+import uos.teamkernel.model.MobileRobotModel;
+import uos.teamkernel.sim.core.SimMainView;
 
-class SimMainViewPrototype extends JFrame implements ISimMainView {
+class SimMainViewPrototype extends JFrame implements SimMainView {
 
     // there is two label in this view for map and mobile robot
     private JLabel mapLabel;
@@ -45,9 +45,9 @@ class SimMainViewPrototype extends JFrame implements ISimMainView {
         /**
          * This method is called when the map or mobile robot has changed
          */
-        if (model instanceof IMapModel) {
+        if (model instanceof MapModel) {
             mapLabel.setText("Map has been changed, " + (++countChangeMap) + " times");
-        } else if (model instanceof IMobileRobotModel) {
+        } else if (model instanceof MobileRobotModel) {
             mobileRobotLabel.setText("Mobile Robot has been changed, " + (++countChangeRobot) + " times");
         }
     }

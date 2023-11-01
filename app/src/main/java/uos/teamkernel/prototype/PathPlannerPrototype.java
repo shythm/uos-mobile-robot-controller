@@ -1,13 +1,13 @@
 package uos.teamkernel.prototype;
 
 import uos.teamkernel.common.Direction;
-import uos.teamkernel.model.IMapModel;
-import uos.teamkernel.model.IMobileRobotModel;
-import uos.teamkernel.sim.core.ISimAddOn;
+import uos.teamkernel.model.MapModel;
+import uos.teamkernel.model.MobileRobotModel;
+import uos.teamkernel.sim.core.SimAddOn;
 
-public class PathPlannerPrototype implements ISimAddOn<Direction> {
+public class PathPlannerPrototype implements SimAddOn<Direction> {
 
-    public Direction call(IMobileRobotModel mobileRobot, IMapModel map) {
+    public Direction call(MobileRobotModel mobileRobot, MapModel map) {
         return mobileRobot.getDirection();
     }
 

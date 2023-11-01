@@ -3,19 +3,19 @@ package uos.teamkernel.prototype;
 import java.awt.Point;
 import java.util.ArrayList;
 import uos.teamkernel.common.Direction;
-import uos.teamkernel.model.IMobileRobotModel;
-import uos.teamkernel.model.IModelObserver;
+import uos.teamkernel.model.MobileRobotModel;
+import uos.teamkernel.model.ModelObserver;
 
-public class MobileRobotPrototype implements IMobileRobotModel {
+public class MobileRobotPrototype implements MobileRobotModel {
 
     private Direction direction;
     private Point position;
-    private ArrayList<IModelObserver> observers;
+    private ArrayList<ModelObserver> observers;
 
     public MobileRobotPrototype() {
         direction = Direction.NORTH;
         position = new Point(0, 0);
-        observers = new ArrayList<IModelObserver>();
+        observers = new ArrayList<ModelObserver>();
     }
 
     public Direction turn() {
@@ -49,12 +49,12 @@ public class MobileRobotPrototype implements IMobileRobotModel {
     /* below is for observer pattern */
 
     private void notifyObservers() {
-        for (IModelObserver observer : observers) {
+        for (ModelObserver observer : observers) {
             observer.modelChanged(this);
         }
     }
 
-    public void addObserver(IModelObserver observer) {
+    public void addObserver(ModelObserver observer) {
         observers.add(observer);
     }
 

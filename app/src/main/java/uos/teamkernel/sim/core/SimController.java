@@ -2,20 +2,20 @@ package uos.teamkernel.sim.core;
 
 import java.awt.Point;
 import uos.teamkernel.common.Direction;
-import uos.teamkernel.model.IMapModel;
-import uos.teamkernel.model.IMobileRobotModel;
+import uos.teamkernel.model.MapModel;
+import uos.teamkernel.model.MobileRobotModel;
 
 public class SimController {
 
-    private IMobileRobotModel mobileRobot;
-    private IMapModel map;
-    private ISimMainView mainView;
+    private MobileRobotModel mobileRobot;
+    private MapModel map;
+    private SimMainView mainView;
 
-    private ISimAddOn<Direction> pathPlanner;
-    private ISimAddOn<Void> voiceRecognizer;
+    private SimAddOn<Direction> pathPlanner;
+    private SimAddOn<Void> voiceRecognizer;
 
-    public SimController(IMobileRobotModel mobileRobot, IMapModel map, ISimMainView mainView,
-            ISimAddOn<Direction> pathPlanner, ISimAddOn<Void> voiceRecognizer) {
+    public SimController(MobileRobotModel mobileRobot, MapModel map, SimMainView mainView,
+            SimAddOn<Direction> pathPlanner, SimAddOn<Void> voiceRecognizer) {
         this.mobileRobot = mobileRobot;
         this.map = map;
 

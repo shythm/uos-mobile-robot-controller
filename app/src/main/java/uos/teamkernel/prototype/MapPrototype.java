@@ -3,17 +3,17 @@ package uos.teamkernel.prototype;
 import java.awt.Point;
 import java.util.ArrayList;
 import uos.teamkernel.common.Spot;
-import uos.teamkernel.model.IMapModel;
-import uos.teamkernel.model.IModelObserver;
+import uos.teamkernel.model.MapModel;
+import uos.teamkernel.model.ModelObserver;
 
-public class MapPrototype implements IMapModel {
+public class MapPrototype implements MapModel {
 
     private Spot[][] map;
-    private ArrayList<IModelObserver> observers;
+    private ArrayList<ModelObserver> observers;
 
     public MapPrototype() {
         map = new Spot[10][10];
-        observers = new ArrayList<IModelObserver>();
+        observers = new ArrayList<ModelObserver>();
     }
 
     public Spot getSpot(Point position) {
@@ -36,12 +36,12 @@ public class MapPrototype implements IMapModel {
     /* below is for observer pattern */
 
     private void notifyObservers() {
-        for (IModelObserver observer : observers) {
+        for (ModelObserver observer : observers) {
             observer.modelChanged(this);
         }
     }
 
-    public void addObserver(IModelObserver observer) {
+    public void addObserver(ModelObserver observer) {
         observers.add(observer);
     }
 

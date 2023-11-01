@@ -3,7 +3,7 @@ package uos.teamkernel.model;
 import java.awt.Point;
 import uos.teamkernel.common.Direction;
 
-public interface IMobileRobotModel extends IModelObservable {
+public interface MobileRobotModel extends ModelObservable {
 
     /**
      * Turn the robot 90 degrees clockwise. This mobile robot can only turn 90

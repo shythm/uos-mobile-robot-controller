@@ -1,9 +1,9 @@
 package uos.teamkernel.sim.core;
 
 import java.awt.event.ActionListener;
-import uos.teamkernel.model.IModelObserver;
+import uos.teamkernel.model.ModelObserver;
 
-public interface ISimMainView extends IModelObserver {
+public interface SimMainView extends ModelObserver {
 
     /**
      * add step button listener
