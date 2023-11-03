@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.event.ActionListener;
 import uos.teamkernel.model.MapModel;
 import uos.teamkernel.model.MobileRobotModel;
-import uos.teamkernel.sim.core.SimMainView;
+import uos.teamkernel.view.SimMainView;
 
 class SimMainViewPrototype extends JFrame implements SimMainView {
 

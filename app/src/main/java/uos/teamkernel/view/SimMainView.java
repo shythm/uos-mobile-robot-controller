@@ -1,4 +1,4 @@
-package uos.teamkernel.sim.core;
+package uos.teamkernel.view;
 
 import java.awt.event.ActionListener;
 import uos.teamkernel.model.ModelObserver;

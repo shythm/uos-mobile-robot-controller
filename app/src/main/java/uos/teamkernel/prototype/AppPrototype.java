@@ -1,6 +1,6 @@
 package uos.teamkernel.prototype;
 
-import uos.teamkernel.sim.core.SimController;
+import uos.teamkernel.sim.SimController;
 
 public class AppPrototype {
 

@@ -1,4 +1,4 @@
-package uos.teamkernel.sim.core;
+package uos.teamkernel.sim;
 
 import uos.teamkernel.model.MapModel;
 import uos.teamkernel.model.MobileRobotModel;
