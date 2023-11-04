@@ -6,7 +6,7 @@ import uos.teamkernel.model.MapModel;
 import uos.teamkernel.model.MobileRobotModel;
 import uos.teamkernel.view.SimMainView;
 
-class SimMainViewPrototype extends JFrame implements SimMainView {
+class SimMainViewPrototype extends SimMainView {
 
     // there is two label in this view for map and mobile robot
     private JLabel mapLabel;
