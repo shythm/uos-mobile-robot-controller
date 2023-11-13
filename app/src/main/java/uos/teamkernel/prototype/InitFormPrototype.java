@@ -7,12 +7,21 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import uos.teamkernel.common.Spot;
+
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.util.ArrayList;
 import java.awt.FlowLayout;
 import java.awt.Font;
 
 public class InitFormPrototype extends JFrame {
+    private ArrayList<Integer> mapSize;
+    private Spot stasrPoint;
+    private ArrayList<Spot> destPoint;
+    private ArrayList<Spot> colorPoint;
+    private ArrayList<Spot> hazardPoint;
+
     public InitFormPrototype() {
         setTitle("InitForm");
         setMinimumSize(new Dimension(400, 0));
@@ -45,6 +54,10 @@ public class InitFormPrototype extends JFrame {
         mainPanel.add(colorPanel);
         mainPanel.add(hazardPanel);
         mainPanel.add(buttonPanel);
+
+        startButton.addActionListener(e -> {
+        });
+        stopButton.addActionListener(null);
 
         add(mainPanel);
         pack();
