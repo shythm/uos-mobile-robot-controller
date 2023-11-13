@@ -34,7 +34,7 @@ java {
 
 application {
     // Define the main class for the application.
-    mainClass = 'uos.teamkernel.sim.App'
+    mainClass = 'uos.teamkernel.prototype.AppPrototype'
 }
 
 tasks.named('test') {
