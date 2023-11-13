@@ -1,6 +1,6 @@
 package uos.teamkernel.model;
 
-import java.awt.Point;
+import uos.teamkernel.common.Point;
 import uos.teamkernel.common.Spot;
 
 public interface MapModel extends ModelObservable {

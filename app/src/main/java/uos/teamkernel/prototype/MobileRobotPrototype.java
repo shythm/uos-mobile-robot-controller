@@ -1,7 +1,7 @@
 package uos.teamkernel.prototype;
 
-import java.awt.Point;
 import java.util.ArrayList;
+import uos.teamkernel.common.Point;
 import uos.teamkernel.common.Direction;
 import uos.teamkernel.model.MobileRobotModel;
 import uos.teamkernel.model.ModelObserver;
@@ -29,7 +29,7 @@ public class MobileRobotPrototype implements MobileRobotModel {
     }
 
     public Point move() {
-        position = new Point(position.x + 1, position.y + 1);
+        position = new Point(position.getX() + 1, position.getY() + 1);
         notifyObservers(); // notify observers that the state of model has changed
         return position;
     }

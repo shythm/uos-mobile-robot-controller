@@ -1,6 +1,6 @@
 package uos.teamkernel.prototype;
 
-import java.awt.Point;
+import uos.teamkernel.common.Point;
 import java.util.ArrayList;
 import uos.teamkernel.common.Spot;
 import uos.teamkernel.model.MapModel;
@@ -17,11 +17,11 @@ public class MapPrototype implements MapModel {
     }
 
     public Spot getSpot(Point position) {
-        return map[position.x][position.y];
+        return map[position.getX()][position.getY()];
     }
 
     public void setSpot(Point position, Spot spot) {
-        map[position.x][position.y] = spot;
+        map[position.getX()][position.getY()] = spot;
         notifyObservers(); // notify observers that the state of model has changed
     }
 

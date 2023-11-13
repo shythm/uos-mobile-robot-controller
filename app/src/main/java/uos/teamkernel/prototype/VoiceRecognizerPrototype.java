@@ -1,6 +1,6 @@
 package uos.teamkernel.prototype;
 
-import java.awt.Point;
+import uos.teamkernel.common.Point;
 import uos.teamkernel.common.Spot;
 import uos.teamkernel.model.MapModel;
 import uos.teamkernel.model.MobileRobotModel;

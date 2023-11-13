@@ -1,6 +1,6 @@
 package uos.teamkernel.model;
 
-import java.awt.Point;
+import uos.teamkernel.common.Point;
 import uos.teamkernel.common.Direction;
 
 public interface MobileRobotModel extends ModelObservable {

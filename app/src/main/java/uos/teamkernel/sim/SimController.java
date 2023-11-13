@@ -1,7 +1,7 @@
 package uos.teamkernel.sim;
 
-import java.awt.Point;
 import uos.teamkernel.common.Direction;
+import uos.teamkernel.common.Point;
 import uos.teamkernel.model.MapModel;
 import uos.teamkernel.model.MobileRobotModel;
 import uos.teamkernel.view.SimMainView;
