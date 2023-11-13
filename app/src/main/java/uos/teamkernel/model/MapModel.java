@@ -14,6 +14,14 @@ public interface MapModel extends ModelObservable {
     Spot getSpot(Point position);
 
     /**
+     * Get the type of spot at position
+     * 
+     * @param int x, int y
+     * @return The type of spot at position
+     */
+    Spot getSpot(int x, int y);
+
+    /**
      * Set the type of spot at position
      * 
      * @param position Point(x, y)
