@@ -6,6 +6,8 @@ public class AppPrototype {
 
     public static void main(String[] args) {
 
+        InitFormPrototype initForm = new InitFormPrototype();
+
         // create model (map, mobile robot)
         MapPrototype map = new MapPrototype();
         MobileRobotPrototype mobileRobot = new MobileRobotPrototype();
