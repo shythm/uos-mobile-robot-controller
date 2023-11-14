@@ -9,9 +9,15 @@ import javax.swing.JTextField;
 
 import uos.teamkernel.common.Spot;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Point;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.awt.FlowLayout;
 import java.awt.Font;
 
@@ -21,6 +27,15 @@ public class InitFormPrototype extends JFrame {
     private ArrayList<Spot> destPoint;
     private ArrayList<Spot> colorPoint;
     private ArrayList<Spot> hazardPoint;
+
+    private JButton startButton;
+    private JButton stopButton;
+
+    private JPanel mapPanel;
+    private JPanel startPanel;
+    private JPanel destPanel;
+    private JPanel colorPanel;
+    private JPanel hazardPanel;
 
     public InitFormPrototype() {
         setTitle("InitForm");
@@ -33,17 +48,17 @@ public class InitFormPrototype extends JFrame {
         JLabel title = new JLabel("Input");
         title.setFont(new Font("Broadway", Font.PLAIN, 30));
 
-        JPanel mapPanel = createPanel("Map Size");
-        JPanel startPanel = createPanel("Start Point");
-        JPanel destPanel = createPanel("Destination Point");
-        JPanel colorPanel = createPanel("Color Blob");
-        JPanel hazardPanel = createPanel("Hazard Spot");
+        mapPanel = createPanel("Map Size");
+        startPanel = createPanel("Start Point");
+        destPanel = createPanel("Destination Point");
+        colorPanel = createPanel("Color Blob");
+        hazardPanel = createPanel("Hazard Spot");
 
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        JButton startButton = new JButton("Start");
+        startButton = new JButton("Start");
         startButton.setSize(50, 200);
         buttonPanel.add(startButton);
-        JButton stopButton = new JButton("Stop");
+        stopButton = new JButton("Stop");
         stopButton.setSize(50, 200);
         buttonPanel.add(stopButton);
 
@@ -54,10 +69,6 @@ public class InitFormPrototype extends JFrame {
         mainPanel.add(colorPanel);
         mainPanel.add(hazardPanel);
         mainPanel.add(buttonPanel);
-
-        startButton.addActionListener(e -> {
-        });
-        stopButton.addActionListener(null);
 
         add(mainPanel);
         pack();
@@ -77,4 +88,44 @@ public class InitFormPrototype extends JFrame {
         panel.add(textField);
         return panel;
     }
+
+    public void addStartButtonListener(ActionListener listener) {
+        startButton.addActionListener(listener);
+    }
+
+    public void addStopButtonListener(ActionListener listener) {
+        stopButton.addActionListener(listener);
+    }
+
+    private static String getTextFieldValue(JPanel panel) {
+        Component components[] = panel.getComponents();
+        for (Component component : components) {
+            if (component instanceof JTextField) {
+                JTextField textField = (JTextField)component;
+                return textField.getText();
+            }
+        }
+        return null;
+    }
+
+    public void parseMapData() {
+        String mapSizeString = getTextFieldValue(mapPanel);
+    }
+
+    public static List<Point> parseCoordinates(String text) {
+        List<Point> points = new ArrayList<>();
+
+        String pattern = "\\((\\d+),(\\d+)\\)";
+        Pattern r = Pattern.compile(pattern);
+        Matcher m = r.matcher(text);
+
+        while (m.find()) {
+            int x = Integer.parseInt(m.group(1));
+            int y = Integer.parseInt(m.group(2));
+            points.add(new Point(x, y));
+        }
+
+        return points;
+    }
+
 }
