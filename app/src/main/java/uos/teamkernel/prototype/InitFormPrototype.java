@@ -38,19 +38,30 @@ public class InitFormPrototype extends JFrame {
         setTitle("InitForm");
         setMinimumSize(new Dimension(400, 0));
 
+        /*
+         * Main Panel For manage all other label and panels
+         */
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new GridLayout(0, 1, 50, 10));
         mainPanel.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20));
 
+        /*
+         * Title Label For title text
+         */
         JLabel title = new JLabel("Input");
         title.setFont(new Font("Broadway", Font.PLAIN, 30));
 
+        /*
+         * Panels with label For text of type of map data and textfield for input map
+         * data
+         */
         mapPanel = createPanel("Map Size");
         startPanel = createPanel("Start Point");
         destPanel = createPanel("Destination Point");
         colorPanel = createPanel("Color Blob");
         hazardPanel = createPanel("Hazard Spot");
 
+        /* Button Panel with Step button and Voice button */
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         startButton = new JButton("Start");
         startButton.setSize(50, 200);
@@ -74,6 +85,7 @@ public class InitFormPrototype extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
+    // Method for make JPanel with a JLabel and a JTextField
     private static JPanel createPanel(String labelText) {
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(0, 1, 5, 10));
@@ -86,14 +98,17 @@ public class InitFormPrototype extends JFrame {
         return panel;
     }
 
+    // Method for Add ActionListener of StartButton
     public void addStartButtonListener(ActionListener listener) {
         startButton.addActionListener(listener);
     }
 
+    // Method for Add ActionListener of StopButton
     public void addStopButtonListener(ActionListener listener) {
         stopButton.addActionListener(listener);
     }
 
+    // Get Text in JTextField in JPanel
     private static String getTextFieldValue(JPanel panel) {
         Component components[] = panel.getComponents();
         for (Component component : components) {
@@ -105,30 +120,27 @@ public class InitFormPrototype extends JFrame {
         return null;
     }
 
-    public void parseMapData() {
+    // Save Parsed Map Data
+    public void saveMapData() {
         String mapSizeString = getTextFieldValue(mapPanel);
         mapSize = parseMapSize(mapSizeString);
-        System.out.println(mapSize);
 
         String startPointString = getTextFieldValue(startPanel);
         for (Point point : parseCoordinates(startPointString)) {
             startPoint = point;
         }
-        System.out.println(startPoint);
 
         String destPointString = getTextFieldValue(destPanel);
         destPoint = parseCoordinates(destPointString);
-        System.out.println(destPoint);
 
         String colorPointString = getTextFieldValue(colorPanel);
         colorPoint = parseCoordinates(colorPointString);
-        System.out.println(colorPoint);
 
         String hazardPointString = getTextFieldValue(hazardPanel);
         hazardPoint = parseCoordinates(hazardPointString);
-        System.out.println(hazardPoint);
     }
 
+    // Parse Coordinates of Multi Points
     public static ArrayList<Point> parseCoordinates(String text) {
         ArrayList<Point> points = new ArrayList<>();
 
@@ -145,6 +157,7 @@ public class InitFormPrototype extends JFrame {
         return points;
     }
 
+    // Parse Map Size value
     public static ArrayList<Integer> parseMapSize(String mapSizeString) {
         ArrayList<Integer> mapSizeParsed = new ArrayList<>();
 
