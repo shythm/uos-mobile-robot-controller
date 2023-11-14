@@ -7,6 +7,12 @@ public class AppPrototype {
     public static void main(String[] args) {
 
         InitFormPrototype initForm = new InitFormPrototype();
+        initForm.addStartButtonListener(e -> {
+            initForm.parseMapData();
+        });
+        initForm.addStopButtonListener(e -> {
+
+        });
 
         // create model (map, mobile robot)
         MapPrototype map = new MapPrototype();
