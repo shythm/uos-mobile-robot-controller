@@ -7,15 +7,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import uos.teamkernel.common.Spot;
-
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.awt.FlowLayout;
@@ -23,10 +20,10 @@ import java.awt.Font;
 
 public class InitFormPrototype extends JFrame {
     private ArrayList<Integer> mapSize;
-    private Spot stasrPoint;
-    private ArrayList<Spot> destPoint;
-    private ArrayList<Spot> colorPoint;
-    private ArrayList<Spot> hazardPoint;
+    private Point startPoint;
+    private ArrayList<Point> destPoint;
+    private ArrayList<Point> colorPoint;
+    private ArrayList<Point> hazardPoint;
 
     private JButton startButton;
     private JButton stopButton;
@@ -110,10 +107,30 @@ public class InitFormPrototype extends JFrame {
 
     public void parseMapData() {
         String mapSizeString = getTextFieldValue(mapPanel);
+        mapSize = parseMapSize(mapSizeString);
+        System.out.println(mapSize);
+
+        String startPointString = getTextFieldValue(startPanel);
+        for (Point point : parseCoordinates(startPointString)) {
+            startPoint = point;
+        }
+        System.out.println(startPoint);
+
+        String destPointString = getTextFieldValue(destPanel);
+        destPoint = parseCoordinates(destPointString);
+        System.out.println(destPoint);
+
+        String colorPointString = getTextFieldValue(colorPanel);
+        colorPoint = parseCoordinates(colorPointString);
+        System.out.println(colorPoint);
+
+        String hazardPointString = getTextFieldValue(hazardPanel);
+        hazardPoint = parseCoordinates(hazardPointString);
+        System.out.println(hazardPoint);
     }
 
-    public static List<Point> parseCoordinates(String text) {
-        List<Point> points = new ArrayList<>();
+    public static ArrayList<Point> parseCoordinates(String text) {
+        ArrayList<Point> points = new ArrayList<>();
 
         String pattern = "\\((\\d+),(\\d+)\\)";
         Pattern r = Pattern.compile(pattern);
@@ -126,6 +143,23 @@ public class InitFormPrototype extends JFrame {
         }
 
         return points;
+    }
+
+    public static ArrayList<Integer> parseMapSize(String mapSizeString) {
+        ArrayList<Integer> mapSizeParsed = new ArrayList<>();
+
+        String pattern = "\\((\\d+),(\\d+)\\)";
+        Pattern r = Pattern.compile(pattern);
+        Matcher m = r.matcher(mapSizeString);
+
+        if (m.find()) {
+            int width = Integer.parseInt(m.group(1));
+            int height = Integer.parseInt(m.group(2));
+            mapSizeParsed.add(width);
+            mapSizeParsed.add(height);
+        }
+
+        return mapSizeParsed;
     }
 
 }
