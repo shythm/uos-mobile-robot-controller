@@ -19,7 +19,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 
 public class InitFormPrototype extends JFrame {
-    private ArrayList<Integer> mapSize;
+    private Dimension mapSize;
     private Point startPoint;
     private ArrayList<Point> destPoint;
     private ArrayList<Point> colorPoint;
@@ -33,6 +33,12 @@ public class InitFormPrototype extends JFrame {
     private JPanel destPanel;
     private JPanel colorPanel;
     private JPanel hazardPanel;
+
+    private Thread parentThread;
+
+    public void addParentsThread(Thread parentThread) {
+        this.parentThread = parentThread;
+    }
 
     public InitFormPrototype() {
         setTitle("InitForm");
@@ -65,9 +71,20 @@ public class InitFormPrototype extends JFrame {
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         startButton = new JButton("Start");
         startButton.setSize(50, 200);
+        startButton.addActionListener((e) -> {
+            saveMapData();
+            if (mapSize != null & startPoint != null & destPoint.size() != 0 & colorPoint.size() != 0
+                    & hazardPoint.size() != 0) {
+                this.parentThread.interrupt();
+                this.dispose();
+            }
+        });
         buttonPanel.add(startButton);
         stopButton = new JButton("Stop");
         stopButton.setSize(50, 200);
+        stopButton.addActionListener((e) -> {
+            System.exit(0);
+        });
         buttonPanel.add(stopButton);
 
         mainPanel.add(title);
@@ -83,6 +100,7 @@ public class InitFormPrototype extends JFrame {
         setResizable(false);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
     }
 
     // Method for make JPanel with a JLabel and a JTextField
@@ -96,16 +114,6 @@ public class InitFormPrototype extends JFrame {
         panel.add(label);
         panel.add(textField);
         return panel;
-    }
-
-    // Method for Add ActionListener of StartButton
-    public void addStartButtonListener(ActionListener listener) {
-        startButton.addActionListener(listener);
-    }
-
-    // Method for Add ActionListener of StopButton
-    public void addStopButtonListener(ActionListener listener) {
-        stopButton.addActionListener(listener);
     }
 
     // Get Text in JTextField in JPanel
@@ -158,8 +166,8 @@ public class InitFormPrototype extends JFrame {
     }
 
     // Parse Map Size value
-    public static ArrayList<Integer> parseMapSize(String mapSizeString) {
-        ArrayList<Integer> mapSizeParsed = new ArrayList<>();
+    public static Dimension parseMapSize(String mapSizeString) {
+        Dimension mapSizeParsed;
 
         String pattern = "\\((\\d+),(\\d+)\\)";
         Pattern r = Pattern.compile(pattern);
@@ -168,11 +176,10 @@ public class InitFormPrototype extends JFrame {
         if (m.find()) {
             int width = Integer.parseInt(m.group(1));
             int height = Integer.parseInt(m.group(2));
-            mapSizeParsed.add(width);
-            mapSizeParsed.add(height);
+            mapSizeParsed = new Dimension(width, height);
+            return mapSizeParsed;
         }
-
-        return mapSizeParsed;
+        return null;
     }
 
 }
