@@ -35,10 +35,6 @@ public class InitFormPrototype extends JFrame {
 
     private Thread parentThread;
 
-    public void addParentsThread(Thread parentThread) {
-        this.parentThread = parentThread;
-    }
-
     public InitFormPrototype() {
         setTitle("InitForm");
         setMinimumSize(new Dimension(400, 0));
@@ -181,4 +177,27 @@ public class InitFormPrototype extends JFrame {
         return null;
     }
 
+    public void addParentsThread(Thread parentThread) {
+        this.parentThread = parentThread;
+    }
+
+    public Dimension getMapsize() {
+        return mapSize;
+    }
+
+    public Point getStartPoint() {
+        return startPoint;
+    }
+
+    public ArrayList<Point> getDestPoint() {
+        return destPoint;
+    }
+
+    public ArrayList<Point> getColorPoint() {
+        return colorPoint;
+    }
+
+    public ArrayList<Point> getHazardPoint() {
+        return hazardPoint;
+    }
 }
