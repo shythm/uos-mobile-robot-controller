@@ -23,8 +23,7 @@ public class Point {
     }
 
     public Point getPoint() {
-        Point p = new Point(this.x, this.y);
-        return p;
+        return this;
     }
 
     public void setPoint(int x, int y) {
