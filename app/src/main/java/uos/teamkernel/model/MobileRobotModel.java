@@ -46,5 +46,5 @@ public interface MobileRobotModel extends ModelObservable {
      * 
      * @return true if there is a color blob
      */
-    boolean senseColorBlob();
+    Direction senseColorBlob();
 }

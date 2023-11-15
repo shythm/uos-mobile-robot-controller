@@ -42,8 +42,8 @@ public class MobileRobotPrototype implements MobileRobotModel {
         return false;
     }
 
-    public boolean senseColorBlob() {
-        return false;
+    public Direction senseColorBlob() {
+        return Direction.UNKNOWN;
     }
 
     /* below is for observer pattern */
