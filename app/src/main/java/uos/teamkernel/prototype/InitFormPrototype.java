@@ -68,8 +68,7 @@ public class InitFormPrototype extends JFrame {
         startButton.setSize(50, 200);
         startButton.addActionListener((e) -> {
             saveMapData();
-            if (mapSize != null & startPoint != null & destPoint.size() != 0 & colorPoint.size() != 0
-                    & hazardPoint.size() != 0) {
+            if (mapSize != null & startPoint != null & destPoint.size() != 0) {
                 this.parentThread.interrupt();
                 this.dispose();
             }
