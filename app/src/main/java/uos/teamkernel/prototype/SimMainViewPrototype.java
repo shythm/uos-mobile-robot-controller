@@ -22,20 +22,18 @@ import uos.teamkernel.model.MobileRobotModel;
 import uos.teamkernel.sim.core.SimMainView;
 
 class SimMainViewPrototype extends JFrame implements SimMainView {
-
-    // there is two label in this view for map and mobile robot
-    private JLabel mapLabel;
-    private JLabel mobileRobotLabel;
-
     // there is two button in this view for step and voice
     private JButton stepButton;
     private JButton voiceButton;
 
-    private static int mapWidth = 15;
-    private static int mapHeight = 15;
-    private static int minMapPanelWidth = mapWidth * 50;
-    private static int minMapPanelHeight = mapHeight * 50;
+    private int mapWidth;
+    private int mapHeight;
+    private int mapPanelWidth;
+    private int mapPanelHeight;
     private static Dimension mapSize;
+
+    private static int padding = 50;
+    private static int pointDist = 50;
 
     class MapPanel extends JPanel {
         Graphics2D g2;
@@ -61,14 +59,20 @@ class SimMainViewPrototype extends JFrame implements SimMainView {
         }
     }
 
-    SimMainViewPrototype() {
+    SimMainViewPrototype(MapPrototype mapModel, MobileRobotPrototype robotModel) {
         super("MainView");
-        setMinimumSize(new Dimension(minMapPanelWidth + 40, 0));
+
+        mapWidth = mapModel.getWidth();
+        mapHeight = mapModel.getHeight();
+        mapPanelWidth = mapWidth * pointDist;
+        mapPanelHeight = mapHeight * pointDist;
+
+        setMinimumSize(new Dimension(mapPanelWidth + 2 * padding, 0));
 
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         mainPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
-        mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 5, 10, 5));
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         JPanel mapPanel = new JPanel();
         mapPanel.setLayout(new BoxLayout(mapPanel, BoxLayout.Y_AXIS));
@@ -76,8 +80,29 @@ class SimMainViewPrototype extends JFrame implements SimMainView {
         mapLabel.setFont(new Font("Broadway", Font.PLAIN, 30));
         mapLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
         mapLabel.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 0));
-        mapSize = new Dimension(minMapPanelWidth + 20, minMapPanelHeight + 20);
-        MapPanel map = new MapPanel();
+        mapSize = new Dimension(mapPanelWidth + 2 * padding, mapPanelHeight + 2 * padding);
+        // MapPanel map = new MapPanel();
+        JPanel map = new JPanel() {
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Point rowStart = new Point(padding, padding);
+                Point rowEnd = new Point(padding, padding + mapPanelHeight);
+                Point colStart = new Point(padding, padding);
+                Point colEnd = new Point(padding + mapPanelWidth, padding);
+
+                for (int i = 0; i <= mapWidth; i++) {
+                    g.drawLine(rowStart.x, rowStart.y, rowEnd.x, rowEnd.y);
+                    rowStart.translate(pointDist, 0);
+                    rowEnd.translate(pointDist, 0);
+                }
+
+                for (int j = 0; j <= mapHeight; j++) {
+                    g.drawLine(colStart.x, colStart.y, colEnd.x, colEnd.y);
+                    colStart.translate(0, pointDist);
+                    colEnd.translate(0, pointDist);
+                }
+            };
+        };
         map.setPreferredSize(mapSize);
         map.setAlignmentX(Component.LEFT_ALIGNMENT);
         // DrawPanel map = new DrawPanel();
@@ -104,18 +129,15 @@ class SimMainViewPrototype extends JFrame implements SimMainView {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    private int countChangeMap = 0;
-    private int countChangeRobot = 0;
-
     public void modelChanged(Object model) {
         /**
          * This method is called when the map or mobile robot has changed
          */
         if (model instanceof MapModel) {
-            mapLabel.setText("Map has been changed, " + (++countChangeMap) + " times");
         } else if (model instanceof MobileRobotModel) {
-            mobileRobotLabel.setText("Mobile Robot has been changed, " + (++countChangeRobot) + " times");
         }
+
+        repaint();
     }
 
     public void addStepButtonListener(ActionListener listener) {
