@@ -37,7 +37,7 @@ public class Point {
 
     public Point[] getAdjPointList() {
         Point[] AdjPointList = new Point[4];
-        int[] dx = { 0, 0, -1, 1 }, dy = { -1, 1, 0, 0 };
+        int[] dx = { -1, 0, 1, 0}, dy = { 0, 1, 0, -1};
         for (int i = 0; i < 4; i++)
             AdjPointList[i] = new Point(this.x + dx[i], this.y + dy[i]);
         return AdjPointList;
