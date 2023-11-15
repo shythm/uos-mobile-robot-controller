@@ -35,29 +35,31 @@ class SimMainViewPrototype extends JFrame implements SimMainView {
     private static int padding = 50;
     private static int pointDist = 50;
 
-    class MapPanel extends JPanel {
-        Graphics2D g2;
+    // class MapPanel extends JPanel {
+    // Graphics2D g2;
 
-        public void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            g2 = (Graphics2D)g;
+    // public void paintComponent(Graphics g) {
+    // super.paintComponent(g);
+    // g2 = (Graphics2D)g;
 
-            Point rowStart = new Point(10, 10);
-            Point rowEnd = new Point(10, (int)(mapSize.getHeight() - 10));
-            Point colStart = new Point(10, 10);
-            Point colEnd = new Point((int)(mapSize.getWidth() - 10), 10);
-            for (int i = 0; i <= mapWidth; i++) {
-                g2.drawLine((int)rowStart.getX(), (int)rowStart.getY(), (int)rowEnd.getX(), (int)rowEnd.getY());
-                rowStart.translate((int)((mapSize.getWidth() - 20) / mapWidth), 0);
-                rowEnd.translate((int)((mapSize.getWidth() - 20) / mapWidth), 0);
-            }
-            for (int i = 0; i <= mapHeight; i++) {
-                g2.drawLine((int)colStart.getX(), (int)colStart.getY(), (int)colEnd.getX(), (int)colEnd.getY());
-                colStart.translate(0, (int)((mapSize.getHeight() - 20) / mapHeight));
-                colEnd.translate(0, (int)((mapSize.getHeight() - 20) / mapHeight));
-            }
-        }
-    }
+    // Point rowStart = new Point(10, 10);
+    // Point rowEnd = new Point(10, (int)(mapSize.getHeight() - 10));
+    // Point colStart = new Point(10, 10);
+    // Point colEnd = new Point((int)(mapSize.getWidth() - 10), 10);
+    // for (int i = 0; i <= mapWidth; i++) {
+    // g2.drawLine((int)rowStart.getX(), (int)rowStart.getY(), (int)rowEnd.getX(),
+    // (int)rowEnd.getY());
+    // rowStart.translate((int)((mapSize.getWidth() - 20) / mapWidth), 0);
+    // rowEnd.translate((int)((mapSize.getWidth() - 20) / mapWidth), 0);
+    // }
+    // for (int i = 0; i <= mapHeight; i++) {
+    // g2.drawLine((int)colStart.getX(), (int)colStart.getY(), (int)colEnd.getX(),
+    // (int)colEnd.getY());
+    // colStart.translate(0, (int)((mapSize.getHeight() - 20) / mapHeight));
+    // colEnd.translate(0, (int)((mapSize.getHeight() - 20) / mapHeight));
+    // }
+    // }
+    // }
 
     SimMainViewPrototype(MapPrototype mapModel, MobileRobotPrototype robotModel) {
         super("MainView");
@@ -83,8 +85,13 @@ class SimMainViewPrototype extends JFrame implements SimMainView {
         mapSize = new Dimension(mapPanelWidth + 2 * padding, mapPanelHeight + 2 * padding);
         // MapPanel map = new MapPanel();
         JPanel map = new JPanel() {
+
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
+                drawBoard(g);
+            }
+
+            private void drawBoard(Graphics g) {
                 Point rowStart = new Point(padding, padding);
                 Point rowEnd = new Point(padding, padding + mapPanelHeight);
                 Point colStart = new Point(padding, padding);
@@ -101,7 +108,7 @@ class SimMainViewPrototype extends JFrame implements SimMainView {
                     colStart.translate(0, pointDist);
                     colEnd.translate(0, pointDist);
                 }
-            };
+            }
         };
         map.setPreferredSize(mapSize);
         map.setAlignmentX(Component.LEFT_ALIGNMENT);
