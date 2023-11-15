@@ -22,11 +22,11 @@ public class AppPrototype {
         }
 
         // create model (map, mobile robot)
-        // MapPrototype map = new MapPrototype();
-        // MobileRobotPrototype mobileRobot = new MobileRobotPrototype();
+        MapPrototype map = new MapPrototype();
+        MobileRobotPrototype mobileRobot = new MobileRobotPrototype();
 
         // create view
-        SimMainViewPrototype mainView = new SimMainViewPrototype(10, 10);
+        SimMainViewPrototype mainView = new SimMainViewPrototype(map, mobileRobot);
         // map.addObserver(mainView);
         // mobileRobot.addObserver(mainView);
 
