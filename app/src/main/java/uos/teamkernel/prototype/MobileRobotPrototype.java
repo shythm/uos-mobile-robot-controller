@@ -5,12 +5,14 @@ import uos.teamkernel.common.Point;
 import uos.teamkernel.common.Direction;
 import uos.teamkernel.model.MobileRobotModel;
 import uos.teamkernel.model.ModelObserver;
+import uos.teamkernel.sim.Map;
 
 public class MobileRobotPrototype implements MobileRobotModel {
 
     private Direction direction;
     private Point position;
     private ArrayList<ModelObserver> observers;
+    private Map robotMap;
 
     public MobileRobotPrototype() {
         direction = Direction.NORTH;

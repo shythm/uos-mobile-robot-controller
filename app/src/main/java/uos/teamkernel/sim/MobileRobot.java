@@ -11,12 +11,14 @@ public class MobileRobot implements MobileRobotModel {
     private Direction direction;
     private Point position;
     private ArrayList<ModelObserver> observers;
+    private Map map;
     static double probability = 0.05;
 
     public MobileRobot() {
         direction = Direction.NORTH;
         position = new Point(0, 0);
         observers = new ArrayList<ModelObserver>();
+        map = new Map(10, 10);
     }
 
     public Direction turn() {
