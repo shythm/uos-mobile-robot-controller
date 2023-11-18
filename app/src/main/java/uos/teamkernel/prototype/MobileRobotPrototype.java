@@ -29,7 +29,7 @@ public class MobileRobotPrototype implements MobileRobotModel {
     }
 
     public Point move() {
-        position = new Point(position.getX() + 1, position.getY() + 1);
+        position = new Point(position.getLocationX() + 1, position.getLocationY() + 1);
         notifyObservers(); // notify observers that the state of model has changed
         return position;
     }

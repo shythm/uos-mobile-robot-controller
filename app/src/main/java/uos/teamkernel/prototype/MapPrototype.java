@@ -17,7 +17,7 @@ public class MapPrototype implements MapModel {
     }
 
     public Spot getSpot(Point position) {
-        return map[position.getX()][position.getY()];
+        return map[position.getLocationX()][position.getLocationY()];
     }
 
     public Spot getSpot(int x, int y) {
@@ -25,7 +25,7 @@ public class MapPrototype implements MapModel {
     }
 
     public void setSpot(Point position, Spot spot) {
-        map[position.getX()][position.getY()] = spot;
+        map[position.getLocationX()][position.getLocationY()] = spot;
         notifyObservers(); // notify observers that the state of model has changed
     }
 

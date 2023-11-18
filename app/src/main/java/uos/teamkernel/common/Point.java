@@ -1,24 +1,20 @@
 package uos.teamkernel.common;
 
-import java.lang.Math;
-
-public class Point {
-    private int x, y;
+public class Point extends java.awt.Point {
 
     public Point() {
-        this.x = this.y = 0;
+        super();
     }
 
     public Point(int x, int y) {
-        this.x = x;
-        this.y = y;
+        super(x, y);
     }
 
-    public int getX() {
+    public int getLocationX() {
         return this.x;
     }
 
-    public int getY() {
+    public int getLocationY() {
         return this.y;
     }
 
@@ -32,12 +28,12 @@ public class Point {
     }
 
     public int getDistance(Point p) {
-        return Math.abs(this.x - p.getX()) + Math.abs(this.y - p.getY());
+        return Math.abs(this.x - p.getLocationX()) + Math.abs(this.y - p.getLocationY());
     }
 
     public Point[] getAdjPointList() {
         Point[] AdjPointList = new Point[4];
-        int[] dx = { -1, 0, 1, 0}, dy = { 0, 1, 0, -1};
+        int[] dx = { -1, 0, 1, 0 }, dy = { 0, 1, 0, -1 };
         for (int i = 0; i < 4; i++)
             AdjPointList[i] = new Point(this.x + dx[i], this.y + dy[i]);
         return AdjPointList;
