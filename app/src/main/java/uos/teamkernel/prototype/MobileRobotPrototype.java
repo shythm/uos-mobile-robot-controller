@@ -46,6 +46,11 @@ public class MobileRobotPrototype implements MobileRobotModel {
         return Direction.UNKNOWN;
     }
 
+    public boolean isInsideMap(Point p) {
+        int x = p.getLocationX(), y = p.getLocationY();
+        return (0 <= x) && (x <= robotMap.getWidth()) && (0 <= y) && (y <= robotMap.getHeight());
+    }
+
     /* below is for observer pattern */
 
     private void notifyObservers() {

@@ -56,6 +56,11 @@ public class MobileRobot implements MobileRobotModel {
         return Direction.UNKNOWN;
     }
 
+    public boolean isInsideMap(Point p) {
+        int x = p.getLocationX(), y = p.getLocationY();
+        return (0 <= x) && (x <= map.getWidth()) && (0 <= y) && (y <= map.getHeight());
+    }
+
     /* below is for observer pattern */
 
     private void notifyObservers() {
