@@ -16,6 +16,11 @@ public class Map implements MapModel {
         observers = new ArrayList<ModelObserver>();
     }
 
+    public Map(int w, int h) {
+        map = new Spot[w][h];
+        observers = new ArrayList<ModelObserver>();
+    }
+
     public Spot getSpot(Point position) {
         return map[position.getLocationX()][position.getLocationY()];
     }
