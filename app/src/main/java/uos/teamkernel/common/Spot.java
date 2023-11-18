@@ -1,7 +1,7 @@
 package uos.teamkernel.common;
 
 public enum Spot {
-    NONE(0), HAZARD(1), COLOR_BLOB(2);
+    NONE(0), HAZARD(1), COLOR_BLOB(2), PREDEFINED_SPOT(3);
 
     private final int value;
 
