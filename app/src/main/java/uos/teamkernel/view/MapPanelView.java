@@ -98,9 +98,15 @@ public class MapPanelView extends JPanel {
         g.drawImage(imRobot, centerX - (distance / 2), centerY - (distance / 2), this);
     }
 
+    private void drawSpots(Graphics g) {
+        // TODO: Draw spots
+        map.getSpot(0, 0); // example
+    }
+
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         drawBoard(g);
         drawRobot(g);
+        drawSpots(g);
     }
 }
