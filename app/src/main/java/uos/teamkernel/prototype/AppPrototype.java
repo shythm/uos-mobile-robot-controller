@@ -36,7 +36,7 @@ public class AppPrototype {
 
         // // create simulator
         // new SimController(mobileRobot, map, mainView, pathPlanner, voiceRecognizer);
-        // mainView.setVisible(true);
+        mainView.setVisible(true);
 
     }
 }
