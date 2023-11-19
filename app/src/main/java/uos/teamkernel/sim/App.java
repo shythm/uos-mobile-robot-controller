@@ -2,12 +2,16 @@ package uos.teamkernel.sim;
 
 import uos.teamkernel.common.Spot;
 import uos.teamkernel.common.Point;
+import uos.teamkernel.common.Direction;
 
 import uos.teamkernel.model.MapModel;
 import uos.teamkernel.model.MobileRobotModel;
 
 import uos.teamkernel.view.InitDialogForm;
 import uos.teamkernel.view.SimMainView;
+
+import uos.teamkernel.prototype.PathPlannerPrototype;
+import uos.teamkernel.prototype.VoiceRecognizerPrototype;
 
 public class App {
     public static void main(String[] args) {
@@ -38,6 +42,14 @@ public class App {
         MapModel robotMap = new Map(mapWidth, mapHeight);
         MobileRobotModel robot = new MobileRobot();
 
-        new SimMainView(robotMap, robot);
+        // Initialize view
+        SimMainView simMainView = new SimMainView(robotMap, robot);
+
+        // Initialize add-ons
+        SimAddOn<Direction> pathPlanner = new PathPlannerPrototype();
+        SimAddOn<Void> voiceRecognizer = new VoiceRecognizerPrototype();
+
+        // Initialize controller and start simulation
+        new SimController(robot, realMap, simMainView, pathPlanner, voiceRecognizer);
     }
 }
