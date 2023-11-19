@@ -33,11 +33,13 @@ public class App {
         }
 
         // Initialize robot
+        MobileRobot robot = new MobileRobot(realMap, initDialogForm.getStartPoint());
+
+        // Initialize robot map for storing robot's sensing result
         Map robotMap = new Map(mapWidth, mapHeight);
         for (Point p : initDialogForm.getDestPoint()) { // set destination spot
             robotMap.setSpot(p, Spot.PREDEFINED_SPOT);
         }
-        MobileRobot robot = new MobileRobot(realMap, initDialogForm.getStartPoint());
 
         // Initialize view
         SimMainView simMainView = new SimMainView(robotMap, robot);
@@ -46,7 +48,7 @@ public class App {
         SimAddOn<Direction> pathPlanner = new PathPlannerPrototype();
         SimAddOn<Void> voiceRecognizer = new VoiceRecognizerPrototype();
 
-        // Initialize controller and start simulation
-        new SimController(robot, realMap, simMainView, pathPlanner, voiceRecognizer);
+        // Initialize controller
+        new SimController(robot, robotMap, simMainView, pathPlanner, voiceRecognizer);
     }
 }
