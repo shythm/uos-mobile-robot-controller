@@ -8,7 +8,11 @@ import uos.teamkernel.sim.SimAddOn;
 public class PathPlannerPrototype implements SimAddOn<Direction> {
 
     public Direction call(MobileRobotModel mobileRobot, MapModel map) {
-        return mobileRobot.getDirection().clockwise();
+        if (Math.random() < 0.8) {
+            return mobileRobot.getDirection();
+        } else {
+            return mobileRobot.getDirection().clockwise();
+        }
     }
 
 }
