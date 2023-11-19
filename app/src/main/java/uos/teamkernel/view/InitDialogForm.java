@@ -142,7 +142,7 @@ public class InitDialogForm extends JFrame {
     public static ArrayList<Point> parseCoordinates(String text) {
         ArrayList<Point> points = new ArrayList<>();
 
-        String pattern = "\\((\\d+),(\\d+)\\)";
+        String pattern = "\\((\\d+)\\s(\\d+)\\)";
         Pattern r = Pattern.compile(pattern);
         Matcher m = r.matcher(text);
 
@@ -155,36 +155,27 @@ public class InitDialogForm extends JFrame {
         return points;
     }
 
-    // Parse Map Size value
-    public static Dimension parseMapSize(String mapSizeString) {
-        Dimension mapSizeParsed;
-
-        String pattern = "\\((\\d+),(\\d+)\\)";
-        Pattern r = Pattern.compile(pattern);
-        Matcher m = r.matcher(mapSizeString);
-
-        if (m.find()) {
-            int width = Integer.parseInt(m.group(1));
-            int height = Integer.parseInt(m.group(2));
-            mapSizeParsed = new Dimension(width, height);
-            return mapSizeParsed;
-        }
-        return null;
-    }
-
     public Dimension getMapSize() {
         String mapSizeString = mapPanel.getText();
-        return parseMapSize(mapSizeString);
+        ArrayList<Point> mapSize = parseCoordinates(mapSizeString);
+
+        if (mapSize.size() == 0) {
+            return null;
+        } else {
+            Point point = mapSize.get(0);
+            return new Dimension(point.x, point.y);
+        }
     }
 
     public Point getStartPoint() {
         String startPointString = startPanel.getText();
+        ArrayList<Point> startPoint = parseCoordinates(startPointString);
 
-        // select first parsed point
-        for (Point point : parseCoordinates(startPointString)) {
-            return point;
+        if (startPoint.size() == 0) {
+            return null;
+        } else {
+            return startPoint.get(0);
         }
-        return null;
     }
 
     public ArrayList<Point> getDestPoint() {
