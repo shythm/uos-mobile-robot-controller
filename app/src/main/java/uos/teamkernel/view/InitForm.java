@@ -1,4 +1,4 @@
-package uos.teamkernel.prototype;
+package uos.teamkernel.view;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
 import java.awt.FlowLayout;
 import java.awt.Font;
 
-public class InitFormPrototype extends JFrame {
+public class InitForm extends JFrame {
     private Dimension mapSize;
     private Point startPoint;
     private ArrayList<Point> destPoint;
@@ -35,7 +35,7 @@ public class InitFormPrototype extends JFrame {
 
     private Thread parentThread;
 
-    public InitFormPrototype() {
+    public InitForm() {
         setTitle("InitForm");
         setMinimumSize(new Dimension(400, 0));
 
