@@ -1,22 +1,21 @@
 package uos.teamkernel.sim;
 
-import java.awt.Point;
 import uos.teamkernel.common.Direction;
-import uos.teamkernel.model.MapModel;
-import uos.teamkernel.model.MobileRobotModel;
+import uos.teamkernel.common.Point;
+import uos.teamkernel.common.Spot;
 import uos.teamkernel.view.SimMainView;
 
 public class SimController {
 
-    private MobileRobotModel mobileRobot;
-    private MapModel map;
+    private MobileRobot mobileRobot;
+    private Map map;
     private SimMainView mainView;
 
     private SimAddOn<Direction> pathPlanner;
     private SimAddOn<Void> voiceRecognizer;
 
-    public SimController(MobileRobotModel mobileRobot, MapModel map, SimMainView mainView,
-            SimAddOn<Direction> pathPlanner, SimAddOn<Void> voiceRecognizer) {
+    public SimController(MobileRobot mobileRobot, Map map, SimMainView mainView, SimAddOn<Direction> pathPlanner,
+            SimAddOn<Void> voiceRecognizer) {
         this.mobileRobot = mobileRobot;
         this.map = map;
 
@@ -52,12 +51,21 @@ public class SimController {
         }
 
         // check if there is a hazard or color blob
-        if (mobileRobot.senseHazard()) {
-            System.out.println("[SENSE] Hazard detected");
-            // TODO: update map
-        } else if (mobileRobot.senseColorBlob()) {
-            System.out.println("[SENSE] Color blob detected");
-            // TODO: update map
+        boolean hazardExistence = mobileRobot.senseHazard();
+        if (hazardExistence) {
+            Point hazard = mobileRobot.predictNextPosition(next);
+            System.out.println("[SENSE] Hazard detected at " + hazard);
+            map.setSpot(hazard, Spot.HAZARD);
+        }
+
+        // check if there are color blobs
+        boolean[] colorBlobExistences = mobileRobot.senseColorBlobs();
+        for (int i = 0; i < 4; i++) {
+            if (colorBlobExistences[i]) {
+                Point colorBlob = mobileRobot.predictNextPosition(Direction.fromInteger(i));
+                System.out.println("[SENSE] Color blob detected at " + colorBlob);
+                map.setSpot(colorBlob, Spot.COLOR_BLOB);
+            }
         }
     }
 

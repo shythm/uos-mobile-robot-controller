@@ -1,27 +1,42 @@
-package uos.teamkernel.prototype;
+package uos.teamkernel.sim;
 
-import java.awt.Point;
+import uos.teamkernel.common.Point;
 import java.util.ArrayList;
 import uos.teamkernel.common.Spot;
 import uos.teamkernel.model.MapModel;
 import uos.teamkernel.model.ModelObserver;
 
-public class MapPrototype implements MapModel {
+public class Map implements MapModel {
 
     private Spot[][] map;
     private ArrayList<ModelObserver> observers;
 
-    public MapPrototype() {
+    public Map() {
         map = new Spot[10][10];
         observers = new ArrayList<ModelObserver>();
     }
 
+    public Map(int w, int h) {
+        map = new Spot[w + 1][h + 1]; // add 1 for boundary
+        observers = new ArrayList<ModelObserver>();
+    }
+
     public Spot getSpot(Point position) {
-        return map[position.x][position.y];
+        int x = position.getLocationX();
+        int y = position.getLocationY();
+
+        if (x < 0 || y < 0 || x >= map.length || y >= map[0].length) {
+            return Spot.NONE;
+        }
+        return map[position.getLocationX()][position.getLocationY()];
+    }
+
+    public Spot getSpot(int x, int y) {
+        return map[x][y];
     }
 
     public void setSpot(Point position, Spot spot) {
-        map[position.x][position.y] = spot;
+        map[position.getLocationX()][position.getLocationY()] = spot;
         notifyObservers(); // notify observers that the state of model has changed
     }
 

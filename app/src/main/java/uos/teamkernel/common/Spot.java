@@ -1,5 +1,15 @@
 package uos.teamkernel.common;
 
 public enum Spot {
-    NONE, HAZARD, COLOR_BLOB,
+    NONE(0), HAZARD(1), COLOR_BLOB(2), PREDEFINED_SPOT(3);
+
+    private final int value;
+
+    Spot(int value) {
+        this.value = value;
+    }
+
+    public boolean isEqual(Spot s) {
+        return this.value == s.value;
+    }
 }
