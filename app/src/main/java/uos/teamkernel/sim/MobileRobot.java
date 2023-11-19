@@ -1,23 +1,24 @@
-package uos.teamkernel.prototype;
+package uos.teamkernel.sim;
 
 import java.util.ArrayList;
 import uos.teamkernel.common.Point;
 import uos.teamkernel.common.Direction;
 import uos.teamkernel.model.MobileRobotModel;
 import uos.teamkernel.model.ModelObserver;
-import uos.teamkernel.sim.Map;
 
-public class MobileRobotPrototype implements MobileRobotModel {
+public class MobileRobot implements MobileRobotModel {
 
     private Direction direction;
     private Point position;
     private ArrayList<ModelObserver> observers;
-    private Map robotMap;
+    private Map map;
+    static double probability = 0.05;
 
-    public MobileRobotPrototype() {
+    public MobileRobot() {
         direction = Direction.NORTH;
         position = new Point(0, 0);
         observers = new ArrayList<ModelObserver>();
+        map = new Map(10, 10);
     }
 
     public Direction turn() {
@@ -41,16 +42,25 @@ public class MobileRobotPrototype implements MobileRobotModel {
     }
 
     public boolean senseHazard() {
-        return false;
+        if (Math.random() < probability)
+            return true;
+        else
+            return false;
     }
 
     public Direction senseColorBlob() {
+
+        for (int i = 0; i < 4; i++) {
+            if (Math.random() < probability) {
+                return Direction.fromInteger(i);
+            }
+        }
         return Direction.UNKNOWN;
     }
 
     public boolean isInsideMap(Point p) {
         int x = p.getLocationX(), y = p.getLocationY();
-        return (0 <= x) && (x <= robotMap.getWidth()) && (0 <= y) && (y <= robotMap.getHeight());
+        return (0 <= x) && (x <= map.getWidth()) && (0 <= y) && (y <= map.getHeight());
     }
 
     /* below is for observer pattern */

@@ -1,18 +1,23 @@
-package uos.teamkernel.prototype;
+package uos.teamkernel.sim;
 
-import java.util.ArrayList;
 import uos.teamkernel.common.Point;
+import java.util.ArrayList;
 import uos.teamkernel.common.Spot;
 import uos.teamkernel.model.MapModel;
 import uos.teamkernel.model.ModelObserver;
 
-public class MapPrototype implements MapModel {
+public class Map implements MapModel {
 
     private Spot[][] map;
     private ArrayList<ModelObserver> observers;
 
-    public MapPrototype() {
+    public Map() {
         map = new Spot[10][10];
+        observers = new ArrayList<ModelObserver>();
+    }
+
+    public Map(int w, int h) {
+        map = new Spot[w][h];
         observers = new ArrayList<ModelObserver>();
     }
 

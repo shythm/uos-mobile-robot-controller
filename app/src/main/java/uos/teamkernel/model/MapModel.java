@@ -1,6 +1,6 @@
 package uos.teamkernel.model;
 
-import java.awt.Point;
+import uos.teamkernel.common.Point;
 import uos.teamkernel.common.Spot;
 
 public interface MapModel extends ModelObservable {
@@ -12,6 +12,14 @@ public interface MapModel extends ModelObservable {
      * @return The type of spot at position
      */
     Spot getSpot(Point position);
+
+    /**
+     * Get the type of spot at position
+     * 
+     * @param int x, int y
+     * @return The type of spot at position
+     */
+    Spot getSpot(int x, int y);
 
     /**
      * Set the type of spot at position

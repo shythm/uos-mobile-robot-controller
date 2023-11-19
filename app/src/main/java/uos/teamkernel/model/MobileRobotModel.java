@@ -1,6 +1,6 @@
 package uos.teamkernel.model;
 
-import java.awt.Point;
+import uos.teamkernel.common.Point;
 import uos.teamkernel.common.Direction;
 
 public interface MobileRobotModel extends ModelObservable {
@@ -35,16 +35,23 @@ public interface MobileRobotModel extends ModelObservable {
     Point getPosition();
 
     /**
-     * sense whether if the robot facing a hazard on its direction of movement
+     * Sense whether if the robot facing a hazard on its direction of movement
      * 
      * @return true if there is a hazard
      */
     boolean senseHazard();
 
     /**
-     * sense is there a color blob in every direction around one unit of the robot
+     * Sense is there a color blob in every direction around one unit of the robot
      * 
      * @return true if there is a color blob
      */
-    boolean senseColorBlob();
+    Direction senseColorBlob();
+
+    /**
+     * Determine whether point p is within the range of the robot's map
+     * 
+     * @return true if point p is within the range of the robot's map
+     */
+    boolean isInsideMap(Point p);
 }

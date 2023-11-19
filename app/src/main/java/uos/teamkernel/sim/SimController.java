@@ -1,9 +1,10 @@
 package uos.teamkernel.sim;
 
-import java.awt.Point;
 import uos.teamkernel.common.Direction;
+import uos.teamkernel.common.Point;
 import uos.teamkernel.model.MapModel;
 import uos.teamkernel.model.MobileRobotModel;
+import uos.teamkernel.view.SimMainView;
 
 public class SimController {
 
@@ -54,9 +55,12 @@ public class SimController {
         if (mobileRobot.senseHazard()) {
             System.out.println("[SENSE] Hazard detected");
             // TODO: update map
-        } else if (mobileRobot.senseColorBlob()) {
-            System.out.println("[SENSE] Color blob detected");
-            // TODO: update map
+        } else {
+            Direction colorBlobDirection = mobileRobot.senseColorBlob();
+            if (colorBlobDirection != Direction.UNKNOWN) {
+                System.out.println("[SENSE] Color blob detected");
+                // TODO: update map
+            }
         }
     }
 

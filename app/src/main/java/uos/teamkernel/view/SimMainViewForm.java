@@ -8,8 +8,6 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.Point;
-import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.geom.AffineTransform;
 
@@ -23,11 +21,11 @@ import javax.swing.JPanel;
 
 import uos.teamkernel.common.Direction;
 import uos.teamkernel.common.Spot;
+import uos.teamkernel.common.Point;
 import uos.teamkernel.model.MapModel;
 import uos.teamkernel.model.MobileRobotModel;
-import uos.teamkernel.sim.SimMainView;
 
-class SimMainViewForm extends JFrame implements SimMainView {
+public class SimMainViewForm extends SimMainView {
     // there is two button in this view for step and voice
     private JButton stepButton;
     private JButton voiceButton;
