@@ -23,7 +23,7 @@ public class PathPlanner implements SimAddOn<Direction> {
      * 
      * @return a closest predefined spot
      */
-    private Point getClosestPoint(MobileRobotModel mobileRobot, MapModel map) {
+    private Point getClosestPoint(MobileRobot mobileRobot, MapModel map) {
         Point nearestPoint = new Point(100, 100);
         Point mobileRobotPosition = mobileRobot.getPosition();
 
@@ -45,7 +45,7 @@ public class PathPlanner implements SimAddOn<Direction> {
      * 
      * @return the shortest path
      */
-    private Queue<Point> bfs(MobileRobotModel mobileRobot, MapModel map, Point startPosition, Point EndPosition) {
+    private Queue<Point> bfs(MobileRobot mobileRobot, MapModel map, Point startPosition, Point EndPosition) {
         Queue<Point> queue = new LinkedList<>();
         Queue<Point> finalRoute = new LinkedList<>();
         Set<Point> visited = new HashSet<>();
@@ -80,8 +80,8 @@ public class PathPlanner implements SimAddOn<Direction> {
      * @return a direction
      */
     public Direction CalculateDirection(Point startPoint, Point endPoint) {
-        int xDiff = endPoint.getLocationX() - startPoint.getLocationX();
-        int yDiff = endPoint.getLocationY() - startPoint.getLocationY();
+        int xDiff = endPoint.x - startPoint.x;
+        int yDiff = endPoint.y - startPoint.y;
 
         Direction dir = switch (xDiff) {
         case 1 -> Direction.SOUTH;
@@ -95,7 +95,7 @@ public class PathPlanner implements SimAddOn<Direction> {
     /**
      * Update the route when the map is changed.
      */
-    private void updateRoute(MobileRobotModel mobileRobot, MapModel map) {
+    private void updateRoute(MobileRobot mobileRobot, MapModel map) {
         Point startPoint = mobileRobot.getPosition();
         Point endPoint = this.getClosestPoint(mobileRobot, map);
 
@@ -109,7 +109,7 @@ public class PathPlanner implements SimAddOn<Direction> {
      */
     public Direction call(MobileRobotModel mobileRobot, MapModel map) {
         if (memorizedPath.isEmpty()) {
-            this.updateRoute(mobileRobot, map);
+            this.updateRoute((MobileRobot)mobileRobot, map);
         }
         Point curPosition = mobileRobot.getPosition();
         Point nextPosition = memorizedPath.peek();

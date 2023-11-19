@@ -4,9 +4,6 @@ import uos.teamkernel.common.Spot;
 import uos.teamkernel.common.Point;
 import uos.teamkernel.common.Direction;
 
-import uos.teamkernel.model.MapModel;
-import uos.teamkernel.model.MobileRobotModel;
-
 import uos.teamkernel.view.InitDialogForm;
 import uos.teamkernel.view.SimMainView;
 
@@ -27,20 +24,20 @@ public class App {
         int mapHeight = (int)initDialogForm.getMapSize().getHeight();
 
         // Initialize map
-        MapModel realMap = new Map(mapWidth, mapHeight);
+        Map realMap = new Map(mapWidth, mapHeight);
         for (Point p : initDialogForm.getHazardPoint()) { // set hazard spot
             realMap.setSpot(p, Spot.HAZARD);
         }
         for (Point p : initDialogForm.getColorPoint()) { // set color blob spot
             realMap.setSpot(p, Spot.COLOR_BLOB);
         }
-        for (Point p : initDialogForm.getDestPoint()) { // set destination spot
-            realMap.setSpot(p, Spot.PREDEFINED_SPOT);
-        }
 
         // Initialize robot
-        MapModel robotMap = new Map(mapWidth, mapHeight);
-        MobileRobotModel robot = new MobileRobot();
+        Map robotMap = new Map(mapWidth, mapHeight);
+        for (Point p : initDialogForm.getDestPoint()) { // set destination spot
+            robotMap.setSpot(p, Spot.PREDEFINED_SPOT);
+        }
+        MobileRobot robot = new MobileRobot(realMap, initDialogForm.getStartPoint());
 
         // Initialize view
         SimMainView simMainView = new SimMainView(robotMap, robot);

@@ -56,11 +56,11 @@ public class SimController {
             System.out.println("[SENSE] Hazard detected");
             // TODO: update map
         } else {
-            Direction colorBlobDirection = mobileRobot.senseColorBlob();
-            if (colorBlobDirection != Direction.UNKNOWN) {
+            boolean[] colorBlobDirection = mobileRobot.senseColorBlobs();
+            if (colorBlobDirection[0] || colorBlobDirection[1] || colorBlobDirection[2] || colorBlobDirection[3]) {
                 System.out.println("[SENSE] Color blob detected");
-                // TODO: update map
             }
+            // TODO: update map
         }
     }
 

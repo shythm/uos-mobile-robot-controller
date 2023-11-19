@@ -46,12 +46,5 @@ public interface MobileRobotModel extends ModelObservable {
      * 
      * @return true if there is a color blob
      */
-    Direction senseColorBlob();
-
-    /**
-     * Determine whether point p is within the range of the robot's map
-     * 
-     * @return true if point p is within the range of the robot's map
-     */
-    boolean isInsideMap(Point p);
+    boolean[] senseColorBlobs();
 }
