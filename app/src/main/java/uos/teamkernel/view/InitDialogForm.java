@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.JOptionPane;
 
 import java.awt.Component;
 import java.awt.Dimension;
@@ -16,26 +17,25 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class InitDialogForm extends JFrame {
-    private Dimension mapSize;
-    private Point startPoint;
-    private ArrayList<Point> destPoint;
-    private ArrayList<Point> colorPoint;
-    private ArrayList<Point> hazardPoint;
-
     private JButton startButton;
     private JButton stopButton;
 
-    private JPanel mapPanel;
-    private JPanel startPanel;
-    private JPanel destPanel;
-    private JPanel colorPanel;
-    private JPanel hazardPanel;
+    private InputArea mapPanel;
+    private InputArea startPanel;
+    private InputArea destPanel;
+    private InputArea colorPanel;
+    private InputArea hazardPanel;
 
     private Thread parentThread;
 
-    public InitDialogForm() {
+    public InitDialogForm(Thread parentThread) {
+        // save parent thread for interrupt
+        this.parentThread = parentThread;
+
         setTitle("InitForm");
         setMinimumSize(new Dimension(400, 0));
 
@@ -56,23 +56,17 @@ public class InitDialogForm extends JFrame {
          * Panels with label For text of type of map data and textfield for input map
          * data
          */
-        mapPanel = createPanel("Map Size");
-        startPanel = createPanel("Start Point");
-        destPanel = createPanel("Destination Point");
-        colorPanel = createPanel("Color Blob");
-        hazardPanel = createPanel("Hazard Spot");
+        mapPanel = new InputArea("Map Size");
+        startPanel = new InputArea("Start Point");
+        destPanel = new InputArea("Destination Point");
+        colorPanel = new InputArea("Color Blob");
+        hazardPanel = new InputArea("Hazard Spot");
 
-        /* Button Panel with Step button and Voice button */
+        /* Button Panel with Start Button and Stop Button */
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         startButton = new JButton("Start");
         startButton.setSize(50, 200);
-        startButton.addActionListener((e) -> {
-            saveMapData();
-            if (mapSize != null & startPoint != null & destPoint.size() != 0) {
-                this.parentThread.interrupt();
-                this.dispose();
-            }
-        });
+        startButton.addActionListener(new StartButtonActionListener());
         buttonPanel.add(startButton);
         stopButton = new JButton("Stop");
         stopButton.setSize(50, 200);
@@ -94,52 +88,54 @@ public class InitDialogForm extends JFrame {
         setResizable(false);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
     }
 
-    // Method for make JPanel with a JLabel and a JTextField
-    private static JPanel createPanel(String labelText) {
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(0, 1, 5, 10));
-        panel.setBorder(BorderFactory.createEmptyBorder(5, 10, 0, 10));
-        JLabel label = new JLabel(labelText);
-        label.setFont(new Font("Britannic", Font.PLAIN, 20));
-        JTextField textField = new JTextField();
-        panel.add(label);
-        panel.add(textField);
-        return panel;
-    }
+    // Event Handler for Start Button
+    class StartButtonActionListener implements ActionListener {
+        private void showErrorMessage(String message) {
+            JOptionPane.showMessageDialog((Component)startButton, message, "Error", JOptionPane.ERROR_MESSAGE);
+        }
 
-    // Get Text in JTextField in JPanel
-    private static String getTextFieldValue(JPanel panel) {
-        Component components[] = panel.getComponents();
-        for (Component component : components) {
-            if (component instanceof JTextField) {
-                JTextField textField = (JTextField)component;
-                return textField.getText();
+        public void actionPerformed(ActionEvent e) {
+            // check if all input is valid
+            if (getMapSize() == null) {
+                showErrorMessage("Map Size is Invalid");
+                return;
             }
+            if (getStartPoint() == null) {
+                showErrorMessage("Start Point is Invalid");
+                return;
+            }
+            if (getDestPoint().size() == 0) {
+                showErrorMessage("Destination Point is Invalid");
+                return;
+            }
+
+            parentThread.interrupt();
+            dispose();
         }
-        return null;
     }
 
-    // Save Parsed Map Data
-    public void saveMapData() {
-        String mapSizeString = getTextFieldValue(mapPanel);
-        mapSize = parseMapSize(mapSizeString);
+    class InputArea extends JPanel {
+        private JLabel label;
+        private JTextField textField;
 
-        String startPointString = getTextFieldValue(startPanel);
-        for (Point point : parseCoordinates(startPointString)) {
-            startPoint = point;
+        public InputArea(String label) {
+            setLayout(new GridLayout(0, 1, 5, 10));
+            setBorder(BorderFactory.createEmptyBorder(5, 10, 0, 10));
+
+            this.label = new JLabel(label);
+            this.label.setFont(new Font("Britannic", Font.PLAIN, 20));
+
+            this.textField = new JTextField();
+
+            add(this.label);
+            add(this.textField);
         }
 
-        String destPointString = getTextFieldValue(destPanel);
-        destPoint = parseCoordinates(destPointString);
-
-        String colorPointString = getTextFieldValue(colorPanel);
-        colorPoint = parseCoordinates(colorPointString);
-
-        String hazardPointString = getTextFieldValue(hazardPanel);
-        hazardPoint = parseCoordinates(hazardPointString);
+        public String getText() {
+            return textField.getText();
+        }
     }
 
     // Parse Coordinates of Multi Points
@@ -176,27 +172,33 @@ public class InitDialogForm extends JFrame {
         return null;
     }
 
-    public void addParentsThread(Thread parentThread) {
-        this.parentThread = parentThread;
-    }
-
-    public Dimension getMapsize() {
-        return mapSize;
+    public Dimension getMapSize() {
+        String mapSizeString = mapPanel.getText();
+        return parseMapSize(mapSizeString);
     }
 
     public Point getStartPoint() {
-        return startPoint;
+        String startPointString = startPanel.getText();
+
+        // select first parsed point
+        for (Point point : parseCoordinates(startPointString)) {
+            return point;
+        }
+        return null;
     }
 
     public ArrayList<Point> getDestPoint() {
-        return destPoint;
+        String destPointString = destPanel.getText();
+        return parseCoordinates(destPointString);
     }
 
     public ArrayList<Point> getColorPoint() {
-        return colorPoint;
+        String colorPointString = colorPanel.getText();
+        return parseCoordinates(colorPointString);
     }
 
     public ArrayList<Point> getHazardPoint() {
-        return hazardPoint;
+        String hazardPointString = hazardPanel.getText();
+        return parseCoordinates(hazardPointString);
     }
 }
