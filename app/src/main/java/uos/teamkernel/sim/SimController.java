@@ -1,4 +1,4 @@
-package uos.teamkernel.sim.core;
+package uos.teamkernel.sim;
 
 import java.awt.Point;
 import uos.teamkernel.common.Direction;

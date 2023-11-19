@@ -25,7 +25,7 @@ import uos.teamkernel.common.Direction;
 import uos.teamkernel.common.Spot;
 import uos.teamkernel.model.MapModel;
 import uos.teamkernel.model.MobileRobotModel;
-import uos.teamkernel.sim.core.SimMainView;
+import uos.teamkernel.sim.SimMainView;
 
 class SimMainViewForm extends JFrame implements SimMainView {
     // there is two button in this view for step and voice
