@@ -1,9 +1,13 @@
 package uos.teamkernel.view;
 
-import java.awt.Graphics;
-import java.awt.Dimension;
+import java.io.File;
+import java.io.IOException;
 
-import javax.swing.JPanel;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+
+import javax.swing.*;
+import javax.imageio.ImageIO;
 
 import uos.teamkernel.common.Point;
 import uos.teamkernel.model.MapModel;
@@ -19,6 +23,8 @@ public class MapPanelView extends JPanel {
     private MapModel map;
     private MobileRobotModel mobileRobot;
 
+    private Image imRobotN, imRobotE, imRobotS, imRobotW;
+
     public MapPanelView(MapModel map, MobileRobotModel mobileRobot) {
         super();
 
@@ -31,8 +37,27 @@ public class MapPanelView extends JPanel {
         width = cols * distance;
         height = rows * distance;
 
+        imRobotN = getResizedImage("/robotN.png");
+        imRobotE = getResizedImage("/robotE.png");
+        imRobotS = getResizedImage("/robotS.png");
+        imRobotW = getResizedImage("/robotW.png");
+
         // set this component size
         setPreferredSize(new Dimension(cols * distance + padding * 2, rows * distance + padding * 2));
+    }
+
+    private Image getResizedImage(String path) {
+        // TODO: Draw default image if image not found
+        Image ret = null;
+
+        try {
+            BufferedImage bi = ImageIO.read(new File(getClass().getResource(path).getPath()));
+            ret = bi.getScaledInstance(distance, distance, Image.SCALE_SMOOTH);
+        } catch (IOException e) {
+            System.out.println("Image " + path + " not found");
+        }
+
+        return ret;
     }
 
     private void drawBoard(Graphics g) {
@@ -56,9 +81,26 @@ public class MapPanelView extends JPanel {
         }
     }
 
+    private void drawRobot(Graphics g) {
+        // get the center of the robot
+        int centerX = ((mobileRobot.getPosition().x * distance) + padding);
+        int centerY = ((mobileRobot.getPosition().y * distance) + padding);
+
+        Image imRobot = switch (mobileRobot.getDirection()) {
+        case NORTH -> imRobotN;
+        case EAST -> imRobotE;
+        case SOUTH -> imRobotS;
+        case WEST -> imRobotW;
+        default -> null;
+        };
+
+        // draw the robot
+        g.drawImage(imRobot, centerX - (distance / 2), centerY - (distance / 2), this);
+    }
+
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         drawBoard(g);
+        drawRobot(g);
     }
-
 }
