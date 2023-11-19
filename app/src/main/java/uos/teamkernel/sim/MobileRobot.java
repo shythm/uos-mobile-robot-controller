@@ -33,8 +33,8 @@ public class MobileRobot implements MobileRobotModel {
         return direction;
     }
 
-    private Point predictNextPosition() {
-        Point nextPosition = switch (direction) {
+    public Point predictNextPosition(Direction d) {
+        Point nextPosition = switch (d) {
         case NORTH -> new Point(position.x, position.y - 1);
         case EAST -> new Point(position.x + 1, position.y);
         case SOUTH -> new Point(position.x, position.y + 1);
@@ -46,7 +46,7 @@ public class MobileRobot implements MobileRobotModel {
     }
 
     public Point move() {
-        position = predictNextPosition();
+        position = predictNextPosition(direction);
         notifyObservers(); // notify observers that the state of model has changed
         return position;
     }
@@ -56,27 +56,20 @@ public class MobileRobot implements MobileRobotModel {
     }
 
     public boolean senseHazard() {
-        Point nextPosition = predictNextPosition();
+        Point nextPosition = predictNextPosition(direction);
         return referenceMap.getSpot(nextPosition) == Spot.HAZARD;
     }
 
     public boolean[] senseColorBlobs() {
-        boolean[] ret = new boolean[4];
+        boolean[] colorBlobExistences = new boolean[4];
 
-        if (referenceMap.getSpot(position.x, position.y - 1) == Spot.COLOR_BLOB) {
-            ret[Direction.NORTH.ordinal()] = true;
-        }
-        if (referenceMap.getSpot(position.x + 1, position.y) == Spot.COLOR_BLOB) {
-            ret[Direction.EAST.ordinal()] = true;
-        }
-        if (referenceMap.getSpot(position.x, position.y + 1) == Spot.COLOR_BLOB) {
-            ret[Direction.SOUTH.ordinal()] = true;
-        }
-        if (referenceMap.getSpot(position.x - 1, position.y) == Spot.COLOR_BLOB) {
-            ret[Direction.WEST.ordinal()] = true;
+        for (int i = 0; i < 4; i++) {
+            if (referenceMap.getSpot(predictNextPosition(Direction.fromInteger(i))) == Spot.COLOR_BLOB) {
+                colorBlobExistences[i] = true;
+            }
         }
 
-        return ret;
+        return colorBlobExistences;
     }
 
     public boolean isInsideMap(Point p) {
