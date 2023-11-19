@@ -1,4 +1,4 @@
-package uos.teamkernel.prototype;
+package uos.teamkernel.view;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -27,7 +27,7 @@ import uos.teamkernel.model.MapModel;
 import uos.teamkernel.model.MobileRobotModel;
 import uos.teamkernel.sim.core.SimMainView;
 
-class SimMainViewPrototype extends JFrame implements SimMainView {
+class SimMainViewForm extends JFrame implements SimMainView {
     // there is two button in this view for step and voice
     private JButton stepButton;
     private JButton voiceButton;
@@ -67,7 +67,7 @@ class SimMainViewPrototype extends JFrame implements SimMainView {
     // }
     // }
 
-    SimMainViewPrototype(MapPrototype mapModel, MobileRobotPrototype robotModel) {
+    SimMainViewForm(MapModel mapModel, MobileRobotModel robotModel) {
         super("MainView");
 
         mapWidth = mapModel.getWidth();
