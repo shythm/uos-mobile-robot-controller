@@ -41,8 +41,8 @@ public class SimMainView extends JFrame implements ModelObserver {
         mapPanel.add(mapLabel);
         mapPanel.add(mapPanelView);
 
-        JButton stepButton = new JButton("Step");
-        JButton voiceButton = new JButton("Voice");
+        stepButton = new JButton("Step");
+        voiceButton = new JButton("Voice");
 
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -62,16 +62,13 @@ public class SimMainView extends JFrame implements ModelObserver {
         setResizable(false);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        // register this view as observer of model
+        mapModel.addObserver(this);
+        robotModel.addObserver(this);
     }
 
     public void modelChanged(Object model) {
-        /**
-         * This method is called when the map or mobile robot has changed
-         */
-        if (model instanceof MapModel) {
-        } else if (model instanceof MobileRobotModel) {
-        }
-
         mapPanelView.repaint();
     }
 
