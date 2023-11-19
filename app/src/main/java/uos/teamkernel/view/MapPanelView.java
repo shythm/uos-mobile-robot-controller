@@ -32,8 +32,8 @@ public class MapPanelView extends JPanel {
         this.mobileRobot = mobileRobot;
 
         // set the size of the board
-        cols = map.getWidth();
-        rows = map.getHeight();
+        cols = map.getWidth() - 1;
+        rows = map.getHeight() - 1;
         width = cols * distance;
         height = rows * distance;
 
