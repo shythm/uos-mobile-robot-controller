@@ -1,10 +1,10 @@
 package uos.teamkernel.sim;
 
-import uos.teamkernel.view.InitForm;
+import uos.teamkernel.view.InitDialogForm;
 
 public class App {
     public static void main(String[] args) {
-        InitForm initForm = new InitForm();
+        InitDialogForm initForm = new InitDialogForm();
         initForm.addParentsThread(Thread.currentThread());
 
         try {

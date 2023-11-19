@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
 import java.awt.FlowLayout;
 import java.awt.Font;
 
-public class InitForm extends JFrame {
+public class InitDialogForm extends JFrame {
     private Dimension mapSize;
     private Point startPoint;
     private ArrayList<Point> destPoint;
@@ -35,7 +35,7 @@ public class InitForm extends JFrame {
 
     private Thread parentThread;
 
-    public InitForm() {
+    public InitDialogForm() {
         setTitle("InitForm");
         setMinimumSize(new Dimension(400, 0));
 
