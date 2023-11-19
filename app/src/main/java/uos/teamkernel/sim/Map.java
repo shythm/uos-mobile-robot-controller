@@ -22,6 +22,12 @@ public class Map implements MapModel {
     }
 
     public Spot getSpot(Point position) {
+        int x = position.getLocationX();
+        int y = position.getLocationY();
+
+        if (x < 0 || y < 0 || x >= map.length || y >= map[0].length) {
+            return Spot.NONE;
+        }
         return map[position.getLocationX()][position.getLocationY()];
     }
 
