@@ -7,16 +7,22 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.ActionListener;
+import java.awt.geom.AffineTransform;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import uos.teamkernel.common.Direction;
+import uos.teamkernel.common.Spot;
 import uos.teamkernel.model.MapModel;
 import uos.teamkernel.model.MobileRobotModel;
 import uos.teamkernel.sim.core.SimMainView;
@@ -85,10 +91,16 @@ class SimMainViewPrototype extends JFrame implements SimMainView {
         mapSize = new Dimension(mapPanelWidth + 2 * padding, mapPanelHeight + 2 * padding);
         // MapPanel map = new MapPanel();
         JPanel map = new JPanel() {
+            private Direction robotDirection;
+            private Dimension mapSize;
+            private Point robotPosition;
+            private Spot[][] mapSpot;
 
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                drawBoard(g);
+                Graphics2D g2 = (Graphics2D)g;
+                drawBoard(g2);
+                drawRobot(g2);
             }
 
             private void drawBoard(Graphics g) {
@@ -107,6 +119,50 @@ class SimMainViewPrototype extends JFrame implements SimMainView {
                     g.drawLine(colStart.x, colStart.y, colEnd.x, colEnd.y);
                     colStart.translate(0, pointDist);
                     colEnd.translate(0, pointDist);
+                }
+            }
+
+            private void drawRobot(Graphics2D g) {
+                Image robot = new ImageIcon("robot.png").getImage();
+                int center_x = ((robotPosition.x * pointDist) + padding);
+                int center_y = ((robotPosition.y * pointDist) + padding);
+                AffineTransform transform = new AffineTransform();
+                double rotateAngle = Math.toRadians(90 * robotDirection.ordinal());
+                transform.rotate(rotateAngle, center_x, center_y);
+                g.setTransform(transform);
+
+                g.drawImage(robot, center_x - (pointDist / 2), center_y - (pointDist / 2), null);
+
+            }
+
+            private void drawSpot(Graphics2D g) {
+                for (int i = 0; i < mapSize.width; i++) {
+                    for (int j = 0; j < mapSize.height; j++) {
+                        if (mapSpot[i][j] != Spot.NONE) {
+                            String spotName = mapSpot[i][j].toString().toLowerCase();
+                            String fileName = spotName + ".png";
+                            Image spotIcon = new ImageIcon(fileName).getImage();
+                            g.drawImage(spotIcon, i, j, null);
+                        }
+                    }
+                }
+
+            }
+
+            public void setRobot(MobileRobotModel robot) {
+                robotDirection = robot.getDirection();
+                robotPosition = robot.getPosition();
+            }
+
+            public void setMapSize(Dimension mapSize) {
+                this.mapSize = mapSize;
+            }
+
+            public void setMapStop(MapModel map) {
+                for (int i = 0; i < mapSize.getWidth(); i++) {
+                    for (int j = 0; j < mapSize.getHeight(); j++) {
+                        mapSpot[i][j] = map.getSpot(new Point(i, j));
+                    }
                 }
             }
         };
@@ -132,7 +188,7 @@ class SimMainViewPrototype extends JFrame implements SimMainView {
         add(mainPanel);
         pack();
         setResizable(false);
-        setVisible(true);
+        // setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
