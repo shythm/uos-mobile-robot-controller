@@ -1,5 +1,7 @@
 package uos.teamkernel.view;
 
+import uos.teamkernel.common.Point;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -11,7 +13,6 @@ import javax.swing.JOptionPane;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -88,6 +89,15 @@ public class InitDialogForm extends JFrame {
         setResizable(false);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        // Test code for input
+        if (true) {
+            mapPanel.textField.setText("(4 5)");
+            startPanel.textField.setText("(1 2)");
+            destPanel.textField.setText("((4 2)(1 5))");
+            colorPanel.textField.setText("((2 2)(4 4))");
+            hazardPanel.textField.setText("((1 0)(3 2))");
+        }
     }
 
     // Event Handler for Start Button
