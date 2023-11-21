@@ -98,7 +98,9 @@ public class MapPanelView extends JPanel {
         };
 
         // draw the robot
-        g.drawImage(imRobot, centerX - (distance / 2), centerY - (distance / 2), this);
+        if (imRobot != null) {
+            g.drawImage(imRobot, centerX - (distance / 2), centerY - (distance / 2), this);
+        }
     }
 
     private void drawSpots(Graphics g) {
