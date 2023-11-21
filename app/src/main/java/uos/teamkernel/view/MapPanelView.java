@@ -23,7 +23,7 @@ public class MapPanelView extends JPanel {
     private MapModel map;
     private MobileRobotModel mobileRobot;
 
-    private Image imRobotN, imRobotE, imRobotS, imRobotW;
+    private Image imRobotN, imRobotE, imRobotS, imRobotW, imDestination, imColorBlob, imHazard;
 
     public MapPanelView(MapModel map, MobileRobotModel mobileRobot) {
         super();
@@ -41,6 +41,9 @@ public class MapPanelView extends JPanel {
         imRobotE = getResizedImage("/robotE.png");
         imRobotS = getResizedImage("/robotS.png");
         imRobotW = getResizedImage("/robotW.png");
+        imDestination = getResizedImage("/destination.png");
+        imColorBlob = getResizedImage("/colotBlob.png");
+        imHazard = getResizedImage("/hazard.png");
 
         // set this component size
         setPreferredSize(new Dimension(cols * distance + padding * 2, rows * distance + padding * 2));
@@ -100,7 +103,23 @@ public class MapPanelView extends JPanel {
 
     private void drawSpots(Graphics g) {
         // TODO: Draw spots
-        map.getSpot(0, 0); // example
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                int centerX = ((i * distance) + padding);
+                int centerY = ((j * distance) + padding);
+
+                Image imSpot = switch (map.getSpot(i, j)) {
+                case HAZARD -> imHazard;
+                case COLOR_BLOB -> imColorBlob;
+                case PREDEFINED_SPOT -> imDestination;
+                default -> null;
+                };
+
+                if (imSpot != null) {
+                    g.drawImage(imSpot, centerX - (distance / 2), centerY - (distance / 2), this);
+                }
+            }
+        }
     }
 
     protected void paintComponent(Graphics g) {
