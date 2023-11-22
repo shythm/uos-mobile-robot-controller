@@ -42,7 +42,7 @@ public class MapPanelView extends JPanel {
         imRobotS = getResizedImage("/robotS.png");
         imRobotW = getResizedImage("/robotW.png");
         imDestination = getResizedImage("/destination.png");
-        imColorBlob = getResizedImage("/colotBlob.png");
+        imColorBlob = getResizedImage("/colorBlob.png");
         imHazard = getResizedImage("/hazard.png");
 
         // set this component size
