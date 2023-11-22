@@ -2,7 +2,7 @@ package uos.teamkernel.view;
 
 import java.io.File;
 import java.io.IOException;
-
+import java.net.URLDecoder;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
@@ -55,7 +55,8 @@ public class MapPanelView extends JPanel {
         Image ret = null;
 
         try {
-            BufferedImage bi = ImageIO.read(new File(getClass().getResource(path).getPath()));
+            String fixedPath = URLDecoder.decode(getClass().getResource(path).getPath(), "UTF-8");
+            BufferedImage bi = ImageIO.read(new File(fixedPath));
             ret = bi.getScaledInstance(distance, distance, Image.SCALE_SMOOTH);
         } catch (IOException e) {
             System.out.println("Image " + path + " not found");
