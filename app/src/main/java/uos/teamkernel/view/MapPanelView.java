@@ -10,6 +10,7 @@ import javax.swing.*;
 import javax.imageio.ImageIO;
 
 import uos.teamkernel.common.Point;
+import uos.teamkernel.common.Spot;
 import uos.teamkernel.model.MapModel;
 import uos.teamkernel.model.MobileRobotModel;
 
@@ -110,15 +111,19 @@ public class MapPanelView extends JPanel {
                 int centerX = ((i * distance) + padding);
                 int centerY = ((j * distance) + padding);
 
-                Image imSpot = switch (map.getSpot(i, j)) {
-                case HAZARD -> imHazard;
-                case COLOR_BLOB -> imColorBlob;
-                case PREDEFINED_SPOT -> imDestination;
-                default -> null;
-                };
+                Spot currentSpot = map.getSpot(i, j);
 
-                if (imSpot != null) {
-                    g.drawImage(imSpot, centerX - (distance / 2), centerY - (distance / 2), this);
+                if (currentSpot != null) {
+                    Image imSpot = switch (map.getSpot(i, j)) {
+                    case HAZARD -> imHazard;
+                    case COLOR_BLOB -> imColorBlob;
+                    case PREDEFINED_SPOT -> imDestination;
+                    default -> null;
+                    };
+
+                    if (imSpot != null) {
+                        g.drawImage(imSpot, centerX - (distance / 2), centerY - (distance / 2), this);
+                    }
                 }
             }
         }
