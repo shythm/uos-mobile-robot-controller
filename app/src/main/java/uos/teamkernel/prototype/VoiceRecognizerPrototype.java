@@ -16,7 +16,6 @@ import uos.teamkernel.common.Spot;
 import uos.teamkernel.model.MapModel;
 import uos.teamkernel.model.MobileRobotModel;
 import uos.teamkernel.sim.SimAddOn;
-import uos.teamkernel.prototype.VoiceRecognizeAPI;
 
 public class VoiceRecognizerPrototype implements SimAddOn<Void> {
     private TargetDataLine line;
@@ -28,7 +27,7 @@ public class VoiceRecognizerPrototype implements SimAddOn<Void> {
     private VoiceRecognizeAPI voiceRecognizeAPI = new VoiceRecognizeAPI();
     private boolean startFlag = false;
 
-    public void changeStartFlag() {
+    public void toggleStartFlag() {
         startFlag = (!startFlag);
     }
 
@@ -81,12 +80,37 @@ public class VoiceRecognizerPrototype implements SimAddOn<Void> {
         }
     }
 
-    private void decodeString(MapModel map) {
+    private Spot getSpotType(String context) {
+        if (context.contains("중요")) {
+            return Spot.COLOR_BLOB;
+        } else if (context.contains("위험")) {
+            return Spot.HAZARD;
+        }
+        return Spot.NONE;
+    }
 
+    private Point getPoint(String context) {
+        int x = 0;
+        int y = 0;
+        return new Point(x, y);
+    }
+
+    private void addSpot(MapModel map) {
+        String context = recordedString.substring(9, recordedString.length() - 2);
+        Spot newSpot = getSpotType(context);
+        Point newPoint = getPoint(context);
+        map.setSpot(newPoint, newSpot);
     }
 
     public Void call(MobileRobotModel mobileRobot, MapModel map) {
-        map.setSpot(new Point(1, 1), Spot.HAZARD);
+        if (startFlag) {
+            toggleStartFlag();
+            startRecording();
+        } else {
+            toggleStartFlag();
+            stopRecording();
+            addSpot(map);
+        }
         return null;
     }
 
