@@ -5,9 +5,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class VoiceRecognizeAPI {
-    public VoiceRecognizeAPI() {
-    }
-
     public String getString(File voice) {
         String clientId = "cjjw7ciheh"; // Application Client ID";
         String clientSecret = "IZsdjm0BgorZX80pkPTbpXMXRXR9DwCsxVODLQov"; // Application Client Secret";
