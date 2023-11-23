@@ -52,8 +52,6 @@ public class VoiceRecognizeAPI {
             }
             br.close();
 
-            System.out.println(response.toString());
-
             return response.toString();
         } catch (Exception e) {
             return "";
