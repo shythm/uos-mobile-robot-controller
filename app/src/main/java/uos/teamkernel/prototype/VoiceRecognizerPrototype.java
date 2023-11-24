@@ -2,6 +2,8 @@ package uos.teamkernel.prototype;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.sound.sampled.AudioFileFormat;
 import javax.sound.sampled.AudioFormat;
@@ -90,20 +92,29 @@ public class VoiceRecognizerPrototype implements SimAddOn<Void> {
     }
 
     private Point getPoint(String context) {
-        int x = 0;
-        int y = 0;
-        return new Point(x, y);
+        Pattern pattern = Pattern.compile("(\\S+)\\s+(-?\\d+)\\s*-\\s*(-?\\d+)");
+        Matcher matcher = pattern.matcher(context);
+
+        if (matcher.matches()) {
+            int x = Integer.parseInt(matcher.group(2));
+            int y = Integer.parseInt(matcher.group(3));
+            return new Point(x, y);
+        }
+        return null;
     }
 
     private void addSpot(MapModel map) {
         String context = recordedString.substring(9, recordedString.length() - 2);
+        System.out.println(context);
         Spot newSpot = getSpotType(context);
+        System.out.println(newSpot);
         Point newPoint = getPoint(context);
+        System.out.println(newPoint);
         map.setSpot(newPoint, newSpot);
     }
 
     public Void call(MobileRobotModel mobileRobot, MapModel map) {
-        if (startFlag) {
+        if (!startFlag) {
             toggleStartFlag();
             startRecording();
         } else {
