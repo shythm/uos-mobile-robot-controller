@@ -1,4 +1,4 @@
-package uos.teamkernel.prototype;
+package uos.teamkernel.sim;
 
 import java.io.*;
 import java.net.HttpURLConnection;

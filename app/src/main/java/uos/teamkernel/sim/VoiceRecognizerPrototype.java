@@ -1,4 +1,4 @@
-package uos.teamkernel.prototype;
+package uos.teamkernel.sim;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,7 +17,6 @@ import uos.teamkernel.common.Point;
 import uos.teamkernel.common.Spot;
 import uos.teamkernel.model.MapModel;
 import uos.teamkernel.model.MobileRobotModel;
-import uos.teamkernel.sim.SimAddOn;
 
 public class VoiceRecognizerPrototype implements SimAddOn<Void> {
     private TargetDataLine line;
