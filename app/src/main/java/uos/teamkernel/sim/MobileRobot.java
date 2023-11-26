@@ -35,9 +35,9 @@ public class MobileRobot implements MobileRobotModel {
 
     public Point predictNextPosition(Direction d) {
         Point nextPosition = switch (d) {
-        case NORTH -> new Point(position.x, position.y - 1);
+        case NORTH -> new Point(position.x, position.y + 1);
         case EAST -> new Point(position.x + 1, position.y);
-        case SOUTH -> new Point(position.x, position.y + 1);
+        case SOUTH -> new Point(position.x, position.y - 1);
         case WEST -> new Point(position.x - 1, position.y);
         default -> new Point(-1, -1);
         };
@@ -46,7 +46,16 @@ public class MobileRobot implements MobileRobotModel {
     }
 
     public Point move() {
-        position = predictNextPosition(direction);
+        // predict next position
+        Point ret = predictNextPosition(direction);
+
+        // check if the position is valid
+        if (!isInsideMap(ret)) {
+            System.out.println("move: Invalid Position");
+            ret = this.position;
+        }
+
+        position = ret;
         notifyObservers(); // notify observers that the state of model has changed
         return position;
     }
