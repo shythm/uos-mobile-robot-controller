@@ -1,5 +1,7 @@
 package uos.teamkernel.sim;
 
+import javax.swing.JButton;
+
 import uos.teamkernel.common.Direction;
 import uos.teamkernel.common.Point;
 import uos.teamkernel.common.Spot;
@@ -24,7 +26,20 @@ public class SimController {
 
         this.mainView = mainView;
         this.mainView.addStepButtonListener(e -> step());
-        this.mainView.addVoiceButtonListener(e -> voice());
+        this.mainView.addVoiceButtonListener(e -> {
+            JButton button = (JButton)e.getSource();
+            String buttonText = button.getText();
+
+            if (buttonText.equals("Voice")) {
+                button.setText("Stop");
+            }
+
+            else if (buttonText.equals("Stop")) {
+                button.setText("Voice");
+            }
+
+            voice(buttonText);
+        });
     }
 
     /**
@@ -72,7 +87,7 @@ public class SimController {
     /**
      * A handler of the voice button
      */
-    private void voice() {
+    private void voice(String buttonText) {
         voiceRecognizer.call(mobileRobot, map);
     }
 
