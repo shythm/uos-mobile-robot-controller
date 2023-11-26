@@ -131,7 +131,7 @@ public class MapPanelView extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         drawBoard(g);
-        drawRobot(g);
         drawSpots(g);
+        drawRobot(g);
     }
 }
