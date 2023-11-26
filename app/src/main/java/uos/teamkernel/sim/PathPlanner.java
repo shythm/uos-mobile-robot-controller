@@ -1,5 +1,6 @@
 package uos.teamkernel.sim;
 
+import java.util.Stack;
 import java.util.Queue;
 import java.util.LinkedList;
 import java.util.Set;
@@ -12,10 +13,10 @@ import uos.teamkernel.model.MapModel;
 import uos.teamkernel.model.MobileRobotModel;
 
 public class PathPlanner implements SimAddOn<Direction> {
-    private Queue<Point> memorizedPath;
+    private Stack<Point> memorizedPath;
 
     public PathPlanner() {
-        memorizedPath = new LinkedList<Point>();
+        memorizedPath = new Stack<Point>();
     }
 
     /**
@@ -27,8 +28,7 @@ public class PathPlanner implements SimAddOn<Direction> {
         Point nearestPoint = new Point(100, 100);
         Point mobileRobotPosition = mobileRobot.getPosition();
 
-        for (int i = 0; i < map.getHeight(); i++) {
-            for (int j = 0; j < map.getWidth(); j++) {
+        for (int i = 0; i < map.getWidth(); i++) {
                 if (map.getSpot(i, j).isEqual(Spot.PREDEFINED_SPOT)) {
                     Point curPoint = new Point(i, j);
                     if (mobileRobotPosition.getDistance(nearestPoint) > mobileRobotPosition.getDistance(curPoint)) {
@@ -45,9 +45,9 @@ public class PathPlanner implements SimAddOn<Direction> {
      * 
      * @return the shortest path
      */
-    private Queue<Point> bfs(MobileRobot mobileRobot, MapModel map, Point startPosition, Point EndPosition) {
+    private Stack<Point> bfs(MobileRobot mobileRobot, MapModel map, Point startPosition, Point EndPosition) {
         Queue<Point> queue = new LinkedList<>();
-        Queue<Point> finalRoute = new LinkedList<>();
+        Stack<Point> finalRoute = new Stack<>();
         Set<Point> visited = new HashSet<>();
         HashMap<Point, Point> backTrackPointDict = new HashMap<>();
         Point curPosition;
@@ -84,9 +84,9 @@ public class PathPlanner implements SimAddOn<Direction> {
         int yDiff = endPoint.y - startPoint.y;
 
         Direction dir = switch (xDiff) {
-        case 1 -> Direction.SOUTH;
-        case 0 -> (yDiff == 1) ? Direction.EAST : Direction.WEST;
-        case -1 -> Direction.NORTH;
+        case 1 -> Direction.WEST;
+        case 0 -> (yDiff == 1) ? Direction.NORTH : Direction.SOUTH;
+        case -1 -> Direction.EAST;
         default -> Direction.UNKNOWN;
         };
         return dir;
@@ -111,10 +111,10 @@ public class PathPlanner implements SimAddOn<Direction> {
         if (memorizedPath.isEmpty()) {
             this.updateRoute((MobileRobot)mobileRobot, map);
         }
-        Point curPosition = mobileRobot.getPosition();
-        Point nextPosition = memorizedPath.peek();
         memorizedPath.poll();
 
+        Point curPosition = mobileRobot.getPosition();
+        Point nextPosition = memorizedPath.pop();
         Direction dir = CalculateDirection(curPosition, nextPosition);
         return dir;
     }
