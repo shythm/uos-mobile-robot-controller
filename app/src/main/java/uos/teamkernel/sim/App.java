@@ -8,7 +8,6 @@ import uos.teamkernel.view.InitDialogForm;
 import uos.teamkernel.view.SimMainView;
 
 import uos.teamkernel.prototype.PathPlannerPrototype;
-import uos.teamkernel.prototype.VoiceRecognizerPrototype;
 
 public class App {
     public static void main(String[] args) {
@@ -48,7 +47,7 @@ public class App {
 
         // Initialize add-ons
         SimAddOn<Direction> pathPlanner = new PathPlannerPrototype();
-        SimAddOn<Void> voiceRecognizer = new VoiceRecognizerPrototype();
+        SimAddOn<Void> voiceRecognizer = new VoiceRecognizer();
 
         // Initialize controller
         new SimController(robot, robotMap, simMainView, pathPlanner, voiceRecognizer);
