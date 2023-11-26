@@ -88,11 +88,6 @@ public class SimController {
      * A handler of the voice button
      */
     private void voice(String buttonText) {
-        if (buttonText.equals("Voice")) {
-
-        } else if (buttonText.equals(("Voice"))) {
-
-        }
         voiceRecognizer.call(mobileRobot, map);
     }
 
