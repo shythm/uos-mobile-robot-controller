@@ -13,12 +13,20 @@ public class Map implements MapModel {
 
     public Map() {
         map = new Spot[10][10];
+        initMap(10, 10);
         observers = new ArrayList<ModelObserver>();
     }
 
     public Map(int w, int h) {
         map = new Spot[w + 1][h + 1]; // add 1 for boundary
+        initMap(w + 1, h + 1);
         observers = new ArrayList<ModelObserver>();
+    }
+
+    public void initMap(int w, int h) {
+        for (int i = 0; i < w; i++)
+            for (int j = 0; j < h; j++)
+                map[i][j] = Spot.NONE;
     }
 
     public Spot getSpot(Point position) {
