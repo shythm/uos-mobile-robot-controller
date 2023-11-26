@@ -96,8 +96,8 @@ public class VoiceRecognizerPrototype implements SimAddOn<Void> {
         Matcher matcher = pattern.matcher(context);
 
         if (matcher.matches()) {
-            int x = Integer.parseInt(matcher.group(2));
-            int y = Integer.parseInt(matcher.group(3));
+            int x = Integer.parseInt(matcher.group(matcher.groupCount() - 1));
+            int y = Integer.parseInt(matcher.group(matcher.groupCount()));
             return new Point(x, y);
         }
         return null;
