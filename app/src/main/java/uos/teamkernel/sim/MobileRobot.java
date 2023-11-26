@@ -83,7 +83,7 @@ public class MobileRobot implements MobileRobotModel {
 
     public boolean isInsideMap(Point p) {
         int x = p.getLocationX(), y = p.getLocationY();
-        return (0 <= x) && (x <= referenceMap.getWidth()) && (0 <= y) && (y <= referenceMap.getHeight());
+        return (0 <= x) && (x < referenceMap.getWidth()) && (0 <= y) && (y < referenceMap.getHeight());
     }
 
     /* below is for observer pattern */
