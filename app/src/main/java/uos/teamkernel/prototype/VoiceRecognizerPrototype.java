@@ -92,12 +92,12 @@ public class VoiceRecognizerPrototype implements SimAddOn<Void> {
     }
 
     private Point getPoint(String context) {
-        Pattern pattern = Pattern.compile("(\\S+)\\s+(-?\\d+)\\s*-\\s*(-?\\d+)");
+        Pattern pattern = Pattern.compile("(\\d+)-(\\d+)");
         Matcher matcher = pattern.matcher(context);
 
-        if (matcher.matches()) {
-            int x = Integer.parseInt(matcher.group(matcher.groupCount() - 1));
-            int y = Integer.parseInt(matcher.group(matcher.groupCount()));
+        if (matcher.find()) {
+            int x = Integer.parseInt(matcher.group(matcher.group(1)));
+            int y = Integer.parseInt(matcher.group(matcher.group(2)));
             return new Point(x, y);
         }
         return null;
