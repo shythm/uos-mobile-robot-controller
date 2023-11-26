@@ -39,11 +39,10 @@ public class App {
         Map robotMap = new Map(mapWidth, mapHeight);
         for (Point p : initDialogForm.getDestPoint()) { // set destination spot
             robotMap.setSpot(p, Spot.PREDEFINED_SPOT);
-            realMap.setSpot(p, Spot.PREDEFINED_SPOT);
         }
 
         // Initialize view
-        SimMainView simMainView = new SimMainView(realMap, robot);
+        SimMainView simMainView = new SimMainView(robotMap, robot);
 
         // Initialize add-ons
         SimAddOn<Direction> pathPlanner = new PathPlannerPrototype();
