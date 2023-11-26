@@ -20,8 +20,9 @@ public class App {
             System.out.println("Initialize done. Start Simulator.");
         }
 
-        int mapWidth = (int)initDialogForm.getMapSize().getWidth();
-        int mapHeight = (int)initDialogForm.getMapSize().getHeight();
+        // Add 1 for boundary
+        int mapWidth = (int)initDialogForm.getMapSize().getWidth() + 1;
+        int mapHeight = (int)initDialogForm.getMapSize().getHeight() + 1;
 
         // Initialize map
         Map realMap = new Map(mapWidth, mapHeight);
@@ -39,10 +40,11 @@ public class App {
         Map robotMap = new Map(mapWidth, mapHeight);
         for (Point p : initDialogForm.getDestPoint()) { // set destination spot
             robotMap.setSpot(p, Spot.PREDEFINED_SPOT);
+            realMap.setSpot(p, Spot.PREDEFINED_SPOT);
         }
 
         // Initialize view
-        SimMainView simMainView = new SimMainView(robotMap, robot);
+        SimMainView simMainView = new SimMainView(realMap, robot);
 
         // Initialize add-ons
         SimAddOn<Direction> pathPlanner = new PathPlannerPrototype();

@@ -17,25 +17,30 @@ public class Map implements MapModel {
     }
 
     public Map(int w, int h) {
-        map = new Spot[w + 1][h + 1]; // add 1 for boundary
+        map = new Spot[w][h];
         observers = new ArrayList<ModelObserver>();
     }
 
-    public Spot getSpot(Point position) {
-        int x = position.getLocationX();
-        int y = position.getLocationY();
-
+    public Spot getSpot(int x, int y) {
         if (x < 0 || y < 0 || x >= map.length || y >= map[0].length) {
             return Spot.NONE;
         }
-        return map[position.getLocationX()][position.getLocationY()];
-    }
-
-    public Spot getSpot(int x, int y) {
         return map[x][y];
     }
 
+    public Spot getSpot(Point position) {
+        return getSpot(position.getLocationX(), position.getLocationY());
+    }
+
     public void setSpot(Point position, Spot spot) {
+        int x = position.getLocationX();
+        int y = position.getLocationY();
+
+        // check if the position is valid
+        if (x < 0 || y < 0 || x >= map.length || y >= map[0].length) {
+            System.out.println(String.format("setSpot: Invalid Position (%d %d)", x, y));
+            return;
+        }
         map[position.getLocationX()][position.getLocationY()] = spot;
         notifyObservers(); // notify observers that the state of model has changed
     }
