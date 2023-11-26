@@ -17,7 +17,7 @@ public class Map implements MapModel {
     }
 
     public Map(int w, int h) {
-        map = new Spot[w + 1][h + 1]; // add 1 for boundary
+        map = new Spot[w][h];
         observers = new ArrayList<ModelObserver>();
     }
 
