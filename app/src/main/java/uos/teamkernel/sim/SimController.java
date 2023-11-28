@@ -47,6 +47,25 @@ public class SimController {
      */
     private void step() {
         Direction curr = mobileRobot.getDirection();
+
+        // check if there is a hazard or color blob
+        boolean hazardExistence = mobileRobot.senseHazard();
+        if (hazardExistence) {
+            Point hazard = mobileRobot.predictNextPosition(curr);
+            System.out.println("[SENSE] Hazard detected at " + hazard);
+            map.setSpot(hazard, Spot.HAZARD);
+        }
+
+        // check if there are color blobs
+        boolean[] colorBlobExistences = mobileRobot.senseColorBlobs();
+        for (int i = 0; i < 4; i++) {
+            if (colorBlobExistences[i]) {
+                Point colorBlob = mobileRobot.predictNextPosition(Direction.fromInteger(i));
+                System.out.println("[SENSE] Color blob detected at " + colorBlob);
+                map.setSpot(colorBlob, Spot.COLOR_BLOB);
+            }
+        }
+
         Direction next = pathPlanner.call(mobileRobot, map);
 
         if (next == Direction.UNKNOWN) {
@@ -64,24 +83,7 @@ public class SimController {
             Point pos = mobileRobot.move();
             System.out.println("[STEP] Moved to " + pos);
         }
-
-        // check if there is a hazard or color blob
-        boolean hazardExistence = mobileRobot.senseHazard();
-        if (hazardExistence) {
-            Point hazard = mobileRobot.predictNextPosition(next);
-            System.out.println("[SENSE] Hazard detected at " + hazard);
-            map.setSpot(hazard, Spot.HAZARD);
-        }
-
-        // check if there are color blobs
-        boolean[] colorBlobExistences = mobileRobot.senseColorBlobs();
-        for (int i = 0; i < 4; i++) {
-            if (colorBlobExistences[i]) {
-                Point colorBlob = mobileRobot.predictNextPosition(Direction.fromInteger(i));
-                System.out.println("[SENSE] Color blob detected at " + colorBlob);
-                map.setSpot(colorBlob, Spot.COLOR_BLOB);
-            }
-        }
+        System.out.println(map.toString(mobileRobot));
     }
 
     /**
