@@ -86,7 +86,6 @@ public class SimController {
             }
             System.out.println("[STEP] Moved to " + pos);
         }
-        System.out.println(map.toString(mobileRobot));
     }
 
     /**
