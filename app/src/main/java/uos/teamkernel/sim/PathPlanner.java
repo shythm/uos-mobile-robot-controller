@@ -61,13 +61,13 @@ public class PathPlanner implements SimAddOn<Direction> {
             if (curPosition.equals(EndPosition)) {
                 path = new LinkedList<>();
                 while (true) {
-                    path.addFirst(curPosition);
-                    System.out.println(path);
                     if (route[curPosition.x][curPosition.y] == null) {
                         break;
                     }
+                    path.addFirst(curPosition);
                     curPosition = route[curPosition.x][curPosition.y];
                 }
+                System.out.println(path);
                 return;
             }
             Point[] AdjPointList = curPosition.getAdjPointList();
@@ -125,6 +125,11 @@ public class PathPlanner implements SimAddOn<Direction> {
             System.out.println("Next : " + nextPosition);
         }
         if (nextPosition.equals(curPosition)) {
+            nextPosition = getNextPoint();
+            System.out.println("Next : " + nextPosition);
+        }
+        if (map.getSpot(nextPosition.x, nextPosition.y).equals(Spot.HAZARD)) {
+            bfs((MobileRobot)mobileRobot, map, curPosition, getClosestDestinationPoint((MobileRobot)mobileRobot, map));
             nextPosition = getNextPoint();
             System.out.println("Next : " + nextPosition);
         }
