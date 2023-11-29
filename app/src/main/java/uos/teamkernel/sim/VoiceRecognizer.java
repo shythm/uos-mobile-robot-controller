@@ -1,7 +1,9 @@
-package uos.teamkernel.prototype;
+package uos.teamkernel.sim;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.sound.sampled.AudioFileFormat;
 import javax.sound.sampled.AudioFormat;
@@ -15,10 +17,8 @@ import uos.teamkernel.common.Point;
 import uos.teamkernel.common.Spot;
 import uos.teamkernel.model.MapModel;
 import uos.teamkernel.model.MobileRobotModel;
-import uos.teamkernel.sim.SimAddOn;
-import uos.teamkernel.prototype.VoiceRecognizeAPI;
 
-public class VoiceRecognizerPrototype implements SimAddOn<Void> {
+public class VoiceRecognizer implements SimAddOn<Void> {
     private TargetDataLine line;
     private AudioInputStream audioInputStream;
     private File tempFile;
@@ -28,7 +28,7 @@ public class VoiceRecognizerPrototype implements SimAddOn<Void> {
     private VoiceRecognizeAPI voiceRecognizeAPI = new VoiceRecognizeAPI();
     private boolean startFlag = false;
 
-    public void changeStartFlag() {
+    public void toggleStartFlag() {
         startFlag = (!startFlag);
     }
 
@@ -81,12 +81,46 @@ public class VoiceRecognizerPrototype implements SimAddOn<Void> {
         }
     }
 
-    private void decodeString(MapModel map) {
+    private Spot getSpotType(String context) {
+        if (context.contains("중요")) {
+            return Spot.COLOR_BLOB;
+        } else if (context.contains("위험")) {
+            return Spot.HAZARD;
+        }
+        return Spot.NONE;
+    }
 
+    private Point getPoint(String context) {
+        Pattern pattern = Pattern.compile("(\\d+)-(\\d+)");
+        Matcher matcher = pattern.matcher(context);
+
+        if (matcher.find()) {
+            int x = Integer.parseInt(matcher.group(1));
+            int y = Integer.parseInt(matcher.group(2));
+            return new Point(x, y);
+        }
+        return null;
+    }
+
+    private void addSpot(MapModel map) {
+        String context = recordedString.substring(9, recordedString.length() - 2);
+        System.out.println(context);
+        Spot newSpot = getSpotType(context);
+        System.out.println(newSpot);
+        Point newPoint = getPoint(context);
+        System.out.println(newPoint);
+        map.setSpot(newPoint, newSpot);
     }
 
     public Void call(MobileRobotModel mobileRobot, MapModel map) {
-        map.setSpot(new Point(1, 1), Spot.HAZARD);
+        if (!startFlag) {
+            toggleStartFlag();
+            startRecording();
+        } else {
+            toggleStartFlag();
+            stopRecording();
+            addSpot(map);
+        }
         return null;
     }
 
