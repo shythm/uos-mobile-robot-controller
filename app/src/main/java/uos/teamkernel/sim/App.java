@@ -7,8 +7,6 @@ import uos.teamkernel.common.Direction;
 import uos.teamkernel.view.InitDialogForm;
 import uos.teamkernel.view.SimMainView;
 
-import uos.teamkernel.prototype.PathPlannerPrototype;
-
 public class App {
     public static void main(String[] args) {
         // Ask for input to initialize
@@ -20,8 +18,8 @@ public class App {
         }
 
         // Add 1 for boundary
-        int mapWidth = (int)initDialogForm.getMapSize().getWidth() + 1;
-        int mapHeight = (int)initDialogForm.getMapSize().getHeight() + 1;
+        int mapWidth = initDialogForm.getMapSize().width + 1;
+        int mapHeight = initDialogForm.getMapSize().height + 1;
 
         // Initialize map
         Map realMap = new Map(mapWidth, mapHeight);
@@ -45,7 +43,7 @@ public class App {
         SimMainView simMainView = new SimMainView(robotMap, robot);
 
         // Initialize add-ons
-        SimAddOn<Direction> pathPlanner = new PathPlannerPrototype();
+        SimAddOn<Direction> pathPlanner = new PathPlanner();
         SimAddOn<Void> voiceRecognizer = new VoiceRecognizer();
 
         // Initialize controller
