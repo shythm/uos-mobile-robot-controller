@@ -64,7 +64,7 @@ public class PathPlanner implements SimAddOn<Direction> {
 
         while (!queue.isEmpty()) {
             curPosition = queue.poll();
-            System.out.println(curPosition);
+            // System.out.println(curPosition);
             if (curPosition.equals(EndPosition)) {
                 path = new LinkedList<>();
                 while (true) {
@@ -74,7 +74,7 @@ public class PathPlanner implements SimAddOn<Direction> {
                     path.addFirst(curPosition);
                     curPosition = route[curPosition.x][curPosition.y];
                 }
-                System.out.println(path);
+                // System.out.println(path);
                 return;
             }
             Point[] AdjPointList = curPosition.getAdjPointList();
@@ -94,7 +94,7 @@ public class PathPlanner implements SimAddOn<Direction> {
      * 
      * @return a direction
      */
-    public Direction CalculateDirection(Point startPoint, Point endPoint) {
+    private Direction CalculateDirection(Point startPoint, Point endPoint) {
         int xDiff = endPoint.x - startPoint.x;
         int yDiff = endPoint.y - startPoint.y;
 
@@ -125,29 +125,30 @@ public class PathPlanner implements SimAddOn<Direction> {
      */
     public Direction call(MobileRobotModel mobileRobotModel, MapModel map) {
         MobileRobot mobileRobot = (MobileRobot)mobileRobotModel;
+        Point currPosition = mobileRobot.getPosition();
+        System.out.println("[PATH] Current " + currPosition);
 
-        Point curPosition = mobileRobot.getPosition();
-        System.out.println("[PATH] Current " + curPosition);
+        boolean needToPlan = (path == null) || // 초기 상태
+                (map.getSpot(currPosition) == Spot.PREDEFINED_SPOT_VISITED) || // 방문 지점에 도착한 경우(다음 방문 지점 탐색 필요)
+                (map.getSpot(nextPosition) == Spot.HAZARD); // 로봇이 다음으로 이동할 위치가 위험 지역인 경우
 
-        Spot currentSpot = map.getSpot(curPosition);
+        if (needToPlan) {
+            Point destPoint = getClosestDestinationPoint(mobileRobot, map);
+            if (destPoint == null) {
+                System.out.println("[PATH] No destination");
+                return Direction.UNKNOWN;
+            }
+            System.out.println("[PATH] Destination " + destPoint);
+            bfs(mobileRobot, map, currPosition, destPoint);
+            nextPosition = getNextPoint();
+        }
 
-        // if the first time to path plan or the robot is on a predefined spot
-        if (path == null || currentSpot == Spot.PREDEFINED_SPOT_VISITED) {
-            System.out.println(getClosestDestinationPoint(mobileRobot, map));
-            bfs(mobileRobot, map, curPosition, getClosestDestinationPoint(mobileRobot, map));
+        // 로봇이 회전을 끝마치고 다음 위치로 이동했을 경우
+        if (nextPosition.equals(currPosition)) {
             nextPosition = getNextPoint();
-            System.out.println("Next : " + nextPosition);
         }
-        if (nextPosition.equals(curPosition)) {
-            nextPosition = getNextPoint();
-            System.out.println("Next : " + nextPosition);
-        }
-        if (map.getSpot(nextPosition.x, nextPosition.y).equals(Spot.HAZARD)) {
-            bfs(mobileRobot, map, curPosition, getClosestDestinationPoint(mobileRobot, map));
-            nextPosition = getNextPoint();
-            System.out.println("Next : " + nextPosition);
-        }
-        Direction dir = CalculateDirection(curPosition, nextPosition);
-        return dir;
+
+        System.out.println("[PATH] Next " + nextPosition);
+        return CalculateDirection(currPosition, nextPosition);
     }
 }
