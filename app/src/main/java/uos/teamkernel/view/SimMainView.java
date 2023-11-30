@@ -21,6 +21,7 @@ public class SimMainView extends JFrame implements ModelObserver {
 
     private final JButton stepButton;
     private final JButton voiceButton;
+    private final JButton autoManualButton;
     private final MapPanelView mapPanelView;
 
     public SimMainView(MapModel mapModel, MobileRobotModel robotModel) {
@@ -47,9 +48,14 @@ public class SimMainView extends JFrame implements ModelObserver {
         mapPanel.add(mapLabel);
         mapPanel.add(mapPanelView);
 
-        // Step and voice button
+        // Step, voice and auto-manual button
         stepButton = new JButton("Step");
         voiceButton = new JButton("Voice");
+        autoManualButton = new JButton("Manual");
+        autoManualButton.addActionListener(e -> {
+            stepButton.setEnabled(!stepButton.isEnabled());
+            voiceButton.setEnabled(!voiceButton.isEnabled());
+        });
 
         // Button panel
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -57,6 +63,7 @@ public class SimMainView extends JFrame implements ModelObserver {
         buttonPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
         buttonPanel.add(stepButton);
         buttonPanel.add(voiceButton);
+        buttonPanel.add(autoManualButton);
 
         // Main panel
         JPanel mainPanel = new JPanel();
@@ -88,5 +95,9 @@ public class SimMainView extends JFrame implements ModelObserver {
 
     public void addVoiceButtonListener(ActionListener listener) {
         voiceButton.addActionListener(listener);
+    }
+
+    public void addAutoManualButtonListener(ActionListener listener) {
+        autoManualButton.addActionListener(listener);
     }
 }
