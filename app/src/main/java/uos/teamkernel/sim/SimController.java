@@ -108,7 +108,7 @@ public class SimController {
             // curr and next is same! the robot can move toward the next direction
             Point pos = mobileRobot.move();
             if (map.getSpot(pos) == Spot.PREDEFINED_SPOT) {
-                map.setSpot(pos, Spot.VISITED_PREDEFINED_SPOT);
+                map.setSpot(pos, Spot.PREDEFINED_SPOT_VISITED);
             }
             System.out.println("[STEP] Moved to " + pos);
         }

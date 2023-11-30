@@ -15,30 +15,37 @@ public class PathPlanner implements SimAddOn<Direction> {
     Deque<Point> path;
     Point nextPosition;
 
-    public PathPlanner() {
-
-    }
-
     /**
-     * Returns the closest predefined spot to the robot's current point.
+     * Returns the closest unvisited predefined spot to the robot's current point.
      * 
-     * @return a closest predefined spot
+     * @return if there is a closest predefined spot return the point, otherwise
+     *         return null
      */
     private Point getClosestDestinationPoint(MobileRobot mobileRobot, MapModel robotMap) {
-        Point nearestPoint = new Point(100, 100);
+        Point closestPoint = null;
+        boolean isFound = false;
         Point mobileRobotPosition = mobileRobot.getPosition();
 
         for (int i = 0; i < robotMap.getWidth(); i++) {
             for (int j = 0; j < robotMap.getHeight(); j++) {
-                if (robotMap.getSpot(i, j) == Spot.PREDEFINED_SPOT) {
+                Spot spot = robotMap.getSpot(i, j);
+                // if the spot is a predefined spot and not visited
+                if (spot == Spot.PREDEFINED_SPOT) {
                     Point curPoint = new Point(i, j);
-                    if (mobileRobotPosition.getDistance(nearestPoint) > mobileRobotPosition.getDistance(curPoint)) {
-                        nearestPoint = curPoint;
+                    // if the closest point is not found yet or the current point is closer to the
+                    // robot
+                    if (!isFound) {
+                        closestPoint = curPoint;
+                        isFound = true;
+                    } else if (mobileRobotPosition.getDistance(closestPoint) > mobileRobotPosition
+                            .getDistance(curPoint)) {
+                        closestPoint = curPoint;
                     }
                 }
             }
         }
-        return nearestPoint;
+
+        return closestPoint;
     }
 
     /**
@@ -73,7 +80,7 @@ public class PathPlanner implements SimAddOn<Direction> {
             Point[] AdjPointList = curPosition.getAdjPointList();
             for (Point nextPoint : AdjPointList) {
                 if (mobileRobot.isInsideMap(nextPoint) && !isVisited[nextPoint.x][nextPoint.y]
-                        && !robotMap.getSpot(nextPoint).isEqual(Spot.HAZARD)) {
+                        && robotMap.getSpot(nextPoint) != Spot.HAZARD) {
                     queue.add(nextPoint);
                     route[nextPoint.x][nextPoint.y] = curPosition;
                     isVisited[nextPoint.x][nextPoint.y] = true;
@@ -116,11 +123,18 @@ public class PathPlanner implements SimAddOn<Direction> {
      * 
      * @return a direction
      */
-    public Direction call(MobileRobotModel mobileRobot, MapModel map) {
+    public Direction call(MobileRobotModel mobileRobotModel, MapModel map) {
+        MobileRobot mobileRobot = (MobileRobot)mobileRobotModel;
+
         Point curPosition = mobileRobot.getPosition();
-        System.out.println("Current : " + curPosition);
-        if (map.getSpot(curPosition.x, curPosition.y).equals(Spot.VISITED_PREDEFINED_SPOT) | path == null) {
-            bfs((MobileRobot)mobileRobot, map, curPosition, getClosestDestinationPoint((MobileRobot)mobileRobot, map));
+        System.out.println("[PATH] Current " + curPosition);
+
+        Spot currentSpot = map.getSpot(curPosition);
+
+        // if the first time to path plan or the robot is on a predefined spot
+        if (path == null || currentSpot == Spot.PREDEFINED_SPOT_VISITED) {
+            System.out.println(getClosestDestinationPoint(mobileRobot, map));
+            bfs(mobileRobot, map, curPosition, getClosestDestinationPoint(mobileRobot, map));
             nextPosition = getNextPoint();
             System.out.println("Next : " + nextPosition);
         }
@@ -129,7 +143,7 @@ public class PathPlanner implements SimAddOn<Direction> {
             System.out.println("Next : " + nextPosition);
         }
         if (map.getSpot(nextPosition.x, nextPosition.y).equals(Spot.HAZARD)) {
-            bfs((MobileRobot)mobileRobot, map, curPosition, getClosestDestinationPoint((MobileRobot)mobileRobot, map));
+            bfs(mobileRobot, map, curPosition, getClosestDestinationPoint(mobileRobot, map));
             nextPosition = getNextPoint();
             System.out.println("Next : " + nextPosition);
         }
