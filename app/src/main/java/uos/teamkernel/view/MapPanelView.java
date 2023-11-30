@@ -24,7 +24,9 @@ public class MapPanelView extends JPanel {
     private MapModel map;
     private MobileRobotModel mobileRobot;
 
-    private Image imRobotN, imRobotE, imRobotS, imRobotW, imDestination, imColorBlob, imHazard;
+    private Image imRobotN, imRobotE, imRobotS, imRobotW;
+    private Image imDestination, imColorBlob, imHazard;
+    private Image imDestinationGrey, imColorBlobGrey, imHazardGrey;
 
     public MapPanelView(MapModel map, MobileRobotModel mobileRobot) {
         super();
@@ -43,8 +45,11 @@ public class MapPanelView extends JPanel {
         imRobotS = getResizedImage("/robotS.png");
         imRobotW = getResizedImage("/robotW.png");
         imDestination = getResizedImage("/destination.png");
+        imDestinationGrey = getResizedImage("/destinationGrey.png");
         imColorBlob = getResizedImage("/colorBlob.png");
+        imColorBlobGrey = getResizedImage("/colorBlobGrey.png");
         imHazard = getResizedImage("/hazard.png");
+        imHazardGrey = getResizedImage("/hazardGrey.png");
 
         // set this component size
         setPreferredSize(new Dimension(width + padding * 2, height + padding * 2));
@@ -114,9 +119,12 @@ public class MapPanelView extends JPanel {
 
                 if (currentSpot != null) {
                     Image imSpot = switch (map.getSpot(i, j)) {
-                    case HAZARD -> imHazard;
-                    case COLOR_BLOB -> imColorBlob;
+                    case HAZARD -> imHazardGrey;
+                    case COLOR_BLOB -> imColorBlobGrey;
                     case PREDEFINED_SPOT -> imDestination;
+                    case PREDEFINED_SPOT_VISITED -> imDestinationGrey;
+                    case COLOR_BLOB_SENSED -> imColorBlob;
+                    case HAZARD_SENSED -> imHazard;
                     default -> null;
                     };
 
