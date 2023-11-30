@@ -20,7 +20,6 @@ public class SimController {
     private SimAddOn<Void> voiceRecognizer;
 
     static TimerTask task;
-    // private boolean isAutoMode = false;
 
     int count = 0;
 
