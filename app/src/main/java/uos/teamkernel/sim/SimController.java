@@ -1,5 +1,8 @@
 package uos.teamkernel.sim;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import javax.swing.JButton;
 
 import uos.teamkernel.common.Direction;
@@ -16,6 +19,11 @@ public class SimController {
     private SimAddOn<Direction> pathPlanner;
     private SimAddOn<Void> voiceRecognizer;
 
+    static TimerTask task;
+    // private boolean isAutoMode = false;
+
+    int count = 0;
+
     public SimController(MobileRobot mobileRobot, Map map, SimMainView mainView, SimAddOn<Direction> pathPlanner,
             SimAddOn<Void> voiceRecognizer) {
         this.mobileRobot = mobileRobot;
@@ -25,6 +33,25 @@ public class SimController {
         this.voiceRecognizer = voiceRecognizer;
 
         this.mainView = mainView;
+        // this.mainView.addStepButtonListener(e -> {
+        // JButton button = (JButton)e.getSource();
+        // String buttonText = button.getText();
+        // Timer scheduler = new Timer();
+        // if (buttonText.equals("Step")) {
+        // button.setText("Stop");
+        // task = new TimerTask() {
+        // @Override
+        // public void run() {
+        // step();
+        // }
+        // };
+        // scheduler.scheduleAtFixedRate(task, 1000, 1000);
+        // task.run();
+        // } else if (buttonText.equals("Stop")) {
+        // button.setText("Step");
+        // task.cancel();
+        // }
+        // });
         this.mainView.addStepButtonListener(e -> step());
         this.mainView.addVoiceButtonListener(e -> {
             JButton button = (JButton)e.getSource();
@@ -39,6 +66,25 @@ public class SimController {
             }
 
             voice(buttonText);
+        });
+        this.mainView.addAutoManualButtonListener(e -> {
+            JButton button = (JButton)e.getSource();
+            String buttonText = button.getText();
+            Timer scheduler = new Timer();
+            if (buttonText.equals("Manual")) {
+                button.setText("Auto");
+                task = new TimerTask() {
+                    @Override
+                    public void run() {
+                        step();
+                    }
+                };
+                scheduler.scheduleAtFixedRate(task, 1000, 1000);
+                task.run();
+            } else if (buttonText.equals("Auto")) {
+                button.setText("Manual");
+                task.cancel();
+            }
         });
     }
 
