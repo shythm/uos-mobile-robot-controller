@@ -10,15 +10,6 @@ public class Point extends java.awt.Point {
         super(x, y);
     }
 
-    public Point getPoint() {
-        return this;
-    }
-
-    public void setPoint(int x, int y) {
-        this.x = x;
-        this.y = y;
-    }
-
     public int getDistance(Point p) {
         return Math.abs(this.x - p.x) + Math.abs(this.y - p.y);
     }
