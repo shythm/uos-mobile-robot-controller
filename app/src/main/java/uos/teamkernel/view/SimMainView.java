@@ -1,17 +1,9 @@
 package uos.teamkernel.view;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.FlowLayout;
-import java.awt.Font;
+import java.awt.*;
 import java.awt.event.ActionListener;
 
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import uos.teamkernel.model.MapModel;
 import uos.teamkernel.model.MobileRobotModel;
@@ -21,9 +13,10 @@ public class SimMainView extends JFrame implements ModelObserver {
 
     private final JButton stepButton;
     private final JButton voiceButton;
+    private final JButton autoManualButton;
     private final MapPanelView mapPanelView;
 
-    public SimMainView(MapModel mapModel, MobileRobotModel robotModel) {
+    public SimMainView(MapModel realMap, MapModel robotMap, MobileRobotModel robotModel) {
         super("MainView");
 
         // Map label
@@ -36,7 +29,7 @@ public class SimMainView extends JFrame implements ModelObserver {
          * Map panel graphical view (draw map and robot) this panel must be repaint when
          * model changed.
          */
-        mapPanelView = new MapPanelView(mapModel, robotModel);
+        mapPanelView = new MapPanelView(realMap, robotMap, robotModel);
         mapPanelView.setAlignmentX(Component.LEFT_ALIGNMENT);
         mapPanelView.setBackground(Color.WHITE);
         mapPanelView.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -47,9 +40,10 @@ public class SimMainView extends JFrame implements ModelObserver {
         mapPanel.add(mapLabel);
         mapPanel.add(mapPanelView);
 
-        // Step and voice button
+        // Step, voice and auto-manual button
         stepButton = new JButton("Step");
         voiceButton = new JButton("Voice");
+        autoManualButton = new JButton("Auto");
 
         // Button panel
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -57,6 +51,7 @@ public class SimMainView extends JFrame implements ModelObserver {
         buttonPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
         buttonPanel.add(stepButton);
         buttonPanel.add(voiceButton);
+        buttonPanel.add(autoManualButton);
 
         // Main panel
         JPanel mainPanel = new JPanel();
@@ -73,7 +68,8 @@ public class SimMainView extends JFrame implements ModelObserver {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // register this view as observer of model
-        mapModel.addObserver(this);
+        realMap.addObserver(this);
+        robotMap.addObserver(this);
         robotModel.addObserver(this);
     }
 
@@ -88,5 +84,28 @@ public class SimMainView extends JFrame implements ModelObserver {
 
     public void addVoiceButtonListener(ActionListener listener) {
         voiceButton.addActionListener(listener);
+    }
+
+    public void setVoiceListeningAction(boolean isListening) {
+        if (isListening) {
+            voiceButton.setText("Stop");
+        } else {
+            voiceButton.setText("Voice");
+        }
+    }
+
+    public void addAutoManualButtonListener(ActionListener listener) {
+        autoManualButton.addActionListener(listener);
+    }
+
+    public void setAutoManualAction(boolean isAuto) {
+        if (isAuto) {
+            autoManualButton.setText("Manual");
+        } else {
+            autoManualButton.setText("Auto");
+        }
+
+        stepButton.setEnabled(!isAuto);
+        voiceButton.setEnabled(!isAuto);
     }
 }

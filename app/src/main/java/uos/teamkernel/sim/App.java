@@ -2,12 +2,9 @@ package uos.teamkernel.sim;
 
 import uos.teamkernel.common.Spot;
 import uos.teamkernel.common.Point;
-import uos.teamkernel.common.Direction;
 
 import uos.teamkernel.view.InitDialogForm;
 import uos.teamkernel.view.SimMainView;
-
-import uos.teamkernel.prototype.PathPlannerPrototype;
 
 public class App {
     public static void main(String[] args) {
@@ -20,8 +17,8 @@ public class App {
         }
 
         // Add 1 for boundary
-        int mapWidth = (int)initDialogForm.getMapSize().getWidth() + 1;
-        int mapHeight = (int)initDialogForm.getMapSize().getHeight() + 1;
+        int mapWidth = initDialogForm.getMapSize().width + 1;
+        int mapHeight = initDialogForm.getMapSize().height + 1;
 
         // Initialize map
         Map realMap = new Map(mapWidth, mapHeight);
@@ -42,11 +39,11 @@ public class App {
         }
 
         // Initialize view
-        SimMainView simMainView = new SimMainView(robotMap, robot);
+        SimMainView simMainView = new SimMainView(realMap, robotMap, robot);
 
         // Initialize add-ons
-        SimAddOn<Direction> pathPlanner = new PathPlannerPrototype();
-        SimAddOn<Void> voiceRecognizer = new VoiceRecognizer();
+        PathPlanner pathPlanner = new PathPlanner(robot.getPosition());
+        VoiceRecognizer voiceRecognizer = new VoiceRecognizer();
 
         // Initialize controller
         new SimController(robot, robotMap, simMainView, pathPlanner, voiceRecognizer);

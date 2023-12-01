@@ -11,13 +11,11 @@ public class Map implements MapModel {
     private Spot[][] map;
     private ArrayList<ModelObserver> observers;
 
-    public Map() {
-        map = new Spot[10][10];
-        observers = new ArrayList<ModelObserver>();
-    }
-
     public Map(int w, int h) {
         map = new Spot[w][h];
+        for (int i = 0; i < w; i++)
+            for (int j = 0; j < h; j++)
+                map[i][j] = Spot.NONE;
         observers = new ArrayList<ModelObserver>();
     }
 
@@ -33,9 +31,13 @@ public class Map implements MapModel {
     }
 
     public void setSpot(Point position, Spot spot) {
+        if (position == null) {
+            System.out.println("setSpot: Invalid Position (null)");
+            return;
+        }
+
         int x = position.getLocationX();
         int y = position.getLocationY();
-
         // check if the position is valid
         if (x < 0 || y < 0 || x >= map.length || y >= map[0].length) {
             System.out.println(String.format("setSpot: Invalid Position (%d %d)", x, y));

@@ -10,7 +10,7 @@ public class VoiceRecognizeAPI {
         String clientSecret = "IZsdjm0BgorZX80pkPTbpXMXRXR9DwCsxVODLQov"; // Application Client Secret";
 
         try {
-            System.out.println("Voice Recognize start");
+            System.out.println("[VOICE API] HTTP Request ...");
 
             String language = "Kor"; // 언어 코드 ( Kor, Jpn, Eng, Chn )
             String apiURL = "https://naveropenapi.apigw.ntruss.com/recog/v1/stt?lang=" + language;

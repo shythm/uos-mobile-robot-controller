@@ -1,6 +1,7 @@
 package uos.teamkernel.sim;
 
-import javax.swing.JButton;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import uos.teamkernel.common.Direction;
 import uos.teamkernel.common.Point;
@@ -13,11 +14,14 @@ public class SimController {
     private Map map;
     private SimMainView mainView;
 
-    private SimAddOn<Direction> pathPlanner;
-    private SimAddOn<Void> voiceRecognizer;
+    private PathPlanner pathPlanner;
+    private VoiceRecognizer voiceRecognizer;
 
-    public SimController(MobileRobot mobileRobot, Map map, SimMainView mainView, SimAddOn<Direction> pathPlanner,
-            SimAddOn<Void> voiceRecognizer) {
+    private int stepCount = 0;
+    private Timer autoStepTimer = null;
+
+    public SimController(MobileRobot mobileRobot, Map map, SimMainView mainView, PathPlanner pathPlanner,
+            VoiceRecognizer voiceRecognizer) {
         this.mobileRobot = mobileRobot;
         this.map = map;
 
@@ -26,26 +30,48 @@ public class SimController {
 
         this.mainView = mainView;
         this.mainView.addStepButtonListener(e -> step());
-        this.mainView.addVoiceButtonListener(e -> {
-            JButton button = (JButton)e.getSource();
-            String buttonText = button.getText();
+        this.mainView.addVoiceButtonListener(e -> voice());
+        this.mainView.addAutoManualButtonListener(e -> auto());
+    }
 
-            if (buttonText.equals("Voice")) {
-                button.setText("Stop");
+    private void sense() {
+        Point pos = mobileRobot.getPosition();
+        Direction dir = mobileRobot.getDirection();
+
+        // check if there is a hazard or color blob
+        boolean hazardExistence = mobileRobot.senseHazard();
+        if (hazardExistence) {
+            Point hazard = mobileRobot.predictNextPosition(dir);
+            System.out.println("[SENSE] Hazard detected at " + hazard);
+            map.setSpot(hazard, Spot.HAZARD);
+        }
+
+        // check if there are color blobs
+        boolean[] colorBlobExistences = mobileRobot.senseColorBlobs();
+        for (int i = 0; i < 4; i++) {
+            if (colorBlobExistences[i]) {
+                Point colorBlob = mobileRobot.predictNextPosition(Direction.fromInteger(i));
+                System.out.println("[SENSE] Color blob detected at " + colorBlob);
+                map.setSpot(colorBlob, Spot.COLOR_BLOB);
             }
+        }
 
-            else if (buttonText.equals("Stop")) {
-                button.setText("Voice");
-            }
-
-            voice(buttonText);
-        });
+        // check if the robot is on a predefined spot
+        if (map.getSpot(pos) == Spot.PREDEFINED_SPOT) {
+            map.setSpot(pos, Spot.PREDEFINED_SPOT_VISITED);
+        }
     }
 
     /**
      * A handler of the step button
      */
     private void step() {
+        if (stepCount == 0) {
+            sense();
+        } else {
+            System.out.println("[STEP] Step " + stepCount);
+        }
+
         Direction curr = mobileRobot.getDirection();
         Direction next = pathPlanner.call(mobileRobot, map);
 
@@ -65,30 +91,34 @@ public class SimController {
             System.out.println("[STEP] Moved to " + pos);
         }
 
-        // check if there is a hazard or color blob
-        boolean hazardExistence = mobileRobot.senseHazard();
-        if (hazardExistence) {
-            Point hazard = mobileRobot.predictNextPosition(next);
-            System.out.println("[SENSE] Hazard detected at " + hazard);
-            map.setSpot(hazard, Spot.HAZARD);
-        }
-
-        // check if there are color blobs
-        boolean[] colorBlobExistences = mobileRobot.senseColorBlobs();
-        for (int i = 0; i < 4; i++) {
-            if (colorBlobExistences[i]) {
-                Point colorBlob = mobileRobot.predictNextPosition(Direction.fromInteger(i));
-                System.out.println("[SENSE] Color blob detected at " + colorBlob);
-                map.setSpot(colorBlob, Spot.COLOR_BLOB);
-            }
-        }
+        stepCount++;
+        sense();
     }
 
     /**
      * A handler of the voice button
      */
-    private void voice(String buttonText) {
-        voiceRecognizer.call(mobileRobot, map);
+    private void voice() {
+        boolean listening = voiceRecognizer.call(map);
+        this.mainView.setVoiceListeningAction(listening);
     }
 
+    /**
+     * A handler of the auto button
+     */
+    private void auto() {
+        if (autoStepTimer == null) {
+            autoStepTimer = new Timer();
+            autoStepTimer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    step();
+                }
+            }, 0, 1000);
+        } else {
+            autoStepTimer.cancel();
+            autoStepTimer = null;
+        }
+        this.mainView.setAutoManualAction(autoStepTimer != null);
+    }
 }

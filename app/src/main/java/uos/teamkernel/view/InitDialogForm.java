@@ -96,7 +96,7 @@ public class InitDialogForm extends JFrame {
             startPanel.textField.setText("(1 2)");
             destPanel.textField.setText("((4 2)(1 5))");
             colorPanel.textField.setText("((2 2)(4 4))");
-            hazardPanel.textField.setText("((1 0)(3 2))");
+            hazardPanel.textField.setText("((1 0)(3 2)(2 3)(2 4)(2 5))");
         }
     }
 
