@@ -19,6 +19,7 @@ public class SimController {
     private SimAddOn<Direction> pathPlanner;
     private SimAddOn<Void> voiceRecognizer;
 
+    private int stepCount = 0;
     static TimerTask task;
 
     int count = 0;
@@ -68,16 +69,14 @@ public class SimController {
         });
     }
 
-    /**
-     * A handler of the step button
-     */
-    private void step() {
-        Direction curr = mobileRobot.getDirection();
+    private void sense() {
+        Point pos = mobileRobot.getPosition();
+        Direction dir = mobileRobot.getDirection();
 
         // check if there is a hazard or color blob
         boolean hazardExistence = mobileRobot.senseHazard();
         if (hazardExistence) {
-            Point hazard = mobileRobot.predictNextPosition(curr);
+            Point hazard = mobileRobot.predictNextPosition(dir);
             System.out.println("[SENSE] Hazard detected at " + hazard);
             map.setSpot(hazard, Spot.HAZARD);
         }
@@ -92,6 +91,23 @@ public class SimController {
             }
         }
 
+        // check if the robot is on a predefined spot
+        if (map.getSpot(pos) == Spot.PREDEFINED_SPOT) {
+            map.setSpot(pos, Spot.PREDEFINED_SPOT_VISITED);
+        }
+    }
+
+    /**
+     * A handler of the step button
+     */
+    private void step() {
+        if (stepCount == 0) {
+            sense();
+        } else {
+            System.out.println("[STEP] Step " + stepCount);
+        }
+
+        Direction curr = mobileRobot.getDirection();
         Direction next = pathPlanner.call(mobileRobot, map);
 
         if (next == Direction.UNKNOWN) {
@@ -107,11 +123,11 @@ public class SimController {
         } else {
             // curr and next is same! the robot can move toward the next direction
             Point pos = mobileRobot.move();
-            if (map.getSpot(pos) == Spot.PREDEFINED_SPOT) {
-                map.setSpot(pos, Spot.PREDEFINED_SPOT_VISITED);
-            }
             System.out.println("[STEP] Moved to " + pos);
         }
+
+        stepCount++;
+        sense();
     }
 
     /**
