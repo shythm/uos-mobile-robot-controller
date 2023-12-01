@@ -43,7 +43,7 @@ public class App {
         SimMainView simMainView = new SimMainView(robotMap, robot);
 
         // Initialize add-ons
-        SimAddOn<Direction> pathPlanner = new PathPlanner();
+        SimAddOn<Direction> pathPlanner = new PathPlanner(robot.getPosition());
         SimAddOn<Void> voiceRecognizer = new VoiceRecognizer();
 
         // Initialize controller
