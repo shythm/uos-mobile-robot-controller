@@ -11,7 +11,7 @@ import uos.teamkernel.common.Spot;
 import uos.teamkernel.model.MapModel;
 import uos.teamkernel.model.MobileRobotModel;
 
-public class PathPlanner implements SimAddOn<Direction> {
+public class PathPlanner {
     Deque<Point> path;
     Point nextPosition;
 

@@ -2,7 +2,6 @@ package uos.teamkernel.sim;
 
 import uos.teamkernel.common.Spot;
 import uos.teamkernel.common.Point;
-import uos.teamkernel.common.Direction;
 
 import uos.teamkernel.view.InitDialogForm;
 import uos.teamkernel.view.SimMainView;
@@ -43,8 +42,8 @@ public class App {
         SimMainView simMainView = new SimMainView(realMap, robotMap, robot);
 
         // Initialize add-ons
-        SimAddOn<Direction> pathPlanner = new PathPlanner(robot.getPosition());
-        SimAddOn<Void> voiceRecognizer = new VoiceRecognizer();
+        PathPlanner pathPlanner = new PathPlanner(robot.getPosition());
+        VoiceRecognizer voiceRecognizer = new VoiceRecognizer();
 
         // Initialize controller
         new SimController(robot, robotMap, simMainView, pathPlanner, voiceRecognizer);

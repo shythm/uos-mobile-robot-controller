@@ -16,16 +16,16 @@ public class SimController {
     private Map map;
     private SimMainView mainView;
 
-    private SimAddOn<Direction> pathPlanner;
-    private SimAddOn<Void> voiceRecognizer;
+    private PathPlanner pathPlanner;
+    private VoiceRecognizer voiceRecognizer;
 
     private int stepCount = 0;
     static TimerTask task;
 
     int count = 0;
 
-    public SimController(MobileRobot mobileRobot, Map map, SimMainView mainView, SimAddOn<Direction> pathPlanner,
-            SimAddOn<Void> voiceRecognizer) {
+    public SimController(MobileRobot mobileRobot, Map map, SimMainView mainView, PathPlanner pathPlanner,
+            VoiceRecognizer voiceRecognizer) {
         this.mobileRobot = mobileRobot;
         this.map = map;
 

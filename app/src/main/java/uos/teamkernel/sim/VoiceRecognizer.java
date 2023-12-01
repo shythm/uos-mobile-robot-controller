@@ -18,7 +18,7 @@ import uos.teamkernel.common.Spot;
 import uos.teamkernel.model.MapModel;
 import uos.teamkernel.model.MobileRobotModel;
 
-public class VoiceRecognizer implements SimAddOn<Void> {
+public class VoiceRecognizer {
     private TargetDataLine line;
     private AudioInputStream audioInputStream;
     private File tempFile;
