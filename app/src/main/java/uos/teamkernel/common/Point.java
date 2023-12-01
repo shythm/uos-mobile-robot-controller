@@ -10,14 +10,6 @@ public class Point extends java.awt.Point {
         super(x, y);
     }
 
-    public int getLocationX() {
-        return this.x;
-    }
-
-    public int getLocationY() {
-        return this.y;
-    }
-
     public Point getPoint() {
         return this;
     }
@@ -28,7 +20,7 @@ public class Point extends java.awt.Point {
     }
 
     public int getDistance(Point p) {
-        return Math.abs(this.x - p.getLocationX()) + Math.abs(this.y - p.getLocationY());
+        return Math.abs(this.x - p.x) + Math.abs(this.y - p.y);
     }
 
     public Point[] getAdjPointList() {

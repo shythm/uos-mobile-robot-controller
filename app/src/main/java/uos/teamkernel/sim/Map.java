@@ -27,7 +27,7 @@ public class Map implements MapModel {
     }
 
     public Spot getSpot(Point position) {
-        return getSpot(position.getLocationX(), position.getLocationY());
+        return getSpot(position.x, position.y);
     }
 
     public void setSpot(Point position, Spot spot) {
@@ -36,14 +36,14 @@ public class Map implements MapModel {
             return;
         }
 
-        int x = position.getLocationX();
-        int y = position.getLocationY();
+        int x = position.x;
+        int y = position.y;
         // check if the position is valid
         if (x < 0 || y < 0 || x >= map.length || y >= map[0].length) {
             System.out.println(String.format("setSpot: Invalid Position (%d %d)", x, y));
             return;
         }
-        map[position.getLocationX()][position.getLocationY()] = spot;
+        map[position.x][position.y] = spot;
         notifyObservers(); // notify observers that the state of model has changed
     }
 
