@@ -43,11 +43,7 @@ public class SimMainView extends JFrame implements ModelObserver {
         // Step, voice and auto-manual button
         stepButton = new JButton("Step");
         voiceButton = new JButton("Voice");
-        autoManualButton = new JButton("Manual");
-        autoManualButton.addActionListener(e -> {
-            stepButton.setEnabled(!stepButton.isEnabled());
-            voiceButton.setEnabled(!voiceButton.isEnabled());
-        });
+        autoManualButton = new JButton("Auto");
 
         // Button panel
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -100,5 +96,16 @@ public class SimMainView extends JFrame implements ModelObserver {
 
     public void addAutoManualButtonListener(ActionListener listener) {
         autoManualButton.addActionListener(listener);
+    }
+
+    public void setAutoManualAction(boolean isAuto) {
+        if (isAuto) {
+            autoManualButton.setText("Manual");
+        } else {
+            autoManualButton.setText("Auto");
+        }
+
+        stepButton.setEnabled(!isAuto);
+        voiceButton.setEnabled(!isAuto);
     }
 }

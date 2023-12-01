@@ -3,8 +3,6 @@ package uos.teamkernel.sim;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import javax.swing.JButton;
-
 import uos.teamkernel.common.Direction;
 import uos.teamkernel.common.Point;
 import uos.teamkernel.common.Spot;
@@ -20,9 +18,7 @@ public class SimController {
     private VoiceRecognizer voiceRecognizer;
 
     private int stepCount = 0;
-    static TimerTask task;
-
-    int count = 0;
+    private Timer autoStepTimer = null;
 
     public SimController(MobileRobot mobileRobot, Map map, SimMainView mainView, PathPlanner pathPlanner,
             VoiceRecognizer voiceRecognizer) {
@@ -35,25 +31,7 @@ public class SimController {
         this.mainView = mainView;
         this.mainView.addStepButtonListener(e -> step());
         this.mainView.addVoiceButtonListener(e -> voice());
-        this.mainView.addAutoManualButtonListener(e -> {
-            JButton button = (JButton)e.getSource();
-            String buttonText = button.getText();
-            Timer scheduler = new Timer();
-            if (buttonText.equals("Manual")) {
-                button.setText("Auto");
-                task = new TimerTask() {
-                    @Override
-                    public void run() {
-                        step();
-                    }
-                };
-                scheduler.scheduleAtFixedRate(task, 1000, 1000);
-                task.run();
-            } else if (buttonText.equals("Auto")) {
-                button.setText("Manual");
-                task.cancel();
-            }
-        });
+        this.mainView.addAutoManualButtonListener(e -> auto());
     }
 
     private void sense() {
@@ -125,4 +103,22 @@ public class SimController {
         this.mainView.setVoiceListeningAction(listening);
     }
 
+    /**
+     * A handler of the auto button
+     */
+    private void auto() {
+        if (autoStepTimer == null) {
+            autoStepTimer = new Timer();
+            autoStepTimer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    step();
+                }
+            }, 0, 1000);
+        } else {
+            autoStepTimer.cancel();
+            autoStepTimer = null;
+        }
+        this.mainView.setAutoManualAction(autoStepTimer != null);
+    }
 }
