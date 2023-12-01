@@ -34,20 +34,7 @@ public class SimController {
 
         this.mainView = mainView;
         this.mainView.addStepButtonListener(e -> step());
-        this.mainView.addVoiceButtonListener(e -> {
-            JButton button = (JButton)e.getSource();
-            String buttonText = button.getText();
-
-            if (buttonText.equals("Voice")) {
-                button.setText("Stop");
-            }
-
-            else if (buttonText.equals("Stop")) {
-                button.setText("Voice");
-            }
-
-            voice(buttonText);
-        });
+        this.mainView.addVoiceButtonListener(e -> voice());
         this.mainView.addAutoManualButtonListener(e -> {
             JButton button = (JButton)e.getSource();
             String buttonText = button.getText();
@@ -133,8 +120,9 @@ public class SimController {
     /**
      * A handler of the voice button
      */
-    private void voice(String buttonText) {
-        voiceRecognizer.call(mobileRobot, map);
+    private void voice() {
+        boolean listening = voiceRecognizer.call(map);
+        this.mainView.setVoiceListeningAction(listening);
     }
 
 }

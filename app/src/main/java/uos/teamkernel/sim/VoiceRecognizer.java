@@ -16,7 +16,6 @@ import javax.sound.sampled.TargetDataLine;
 import uos.teamkernel.common.Point;
 import uos.teamkernel.common.Spot;
 import uos.teamkernel.model.MapModel;
-import uos.teamkernel.model.MobileRobotModel;
 
 public class VoiceRecognizer {
     private TargetDataLine line;
@@ -38,7 +37,7 @@ public class VoiceRecognizer {
             DataLine.Info info = new DataLine.Info(TargetDataLine.class, format);
 
             if (!AudioSystem.isLineSupported(info)) {
-                System.out.println("Line not supported");
+                System.out.println("[VOICE] Error: Line not supported");
                 return;
             }
 
@@ -104,24 +103,24 @@ public class VoiceRecognizer {
 
     private void addSpot(MapModel map) {
         String context = recordedString.substring(9, recordedString.length() - 2);
-        System.out.println(context);
+        System.out.println("[VOICE] Context: " + context);
         Spot newSpot = getSpotType(context);
-        System.out.println(newSpot);
         Point newPoint = getPoint(context);
-        System.out.println(newPoint);
+        System.out.println("[VOICE] Parsed: " + newSpot + " " + newPoint);
         map.setSpot(newPoint, newSpot);
     }
 
-    public Void call(MobileRobotModel mobileRobot, MapModel map) {
-        if (!startFlag) {
-            toggleStartFlag();
+    public boolean call(MapModel map) {
+        toggleStartFlag();
+
+        if (startFlag) {
             startRecording();
         } else {
-            toggleStartFlag();
             stopRecording();
             addSpot(map);
         }
-        return null;
+
+        return startFlag;
     }
 
 }

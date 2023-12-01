@@ -90,6 +90,14 @@ public class SimMainView extends JFrame implements ModelObserver {
         voiceButton.addActionListener(listener);
     }
 
+    public void setVoiceListeningAction(boolean isListening) {
+        if (isListening) {
+            voiceButton.setText("Stop");
+        } else {
+            voiceButton.setText("Voice");
+        }
+    }
+
     public void addAutoManualButtonListener(ActionListener listener) {
         autoManualButton.addActionListener(listener);
     }
