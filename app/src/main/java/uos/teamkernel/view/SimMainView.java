@@ -1,17 +1,9 @@
 package uos.teamkernel.view;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.FlowLayout;
-import java.awt.Font;
+import java.awt.*;
 import java.awt.event.ActionListener;
 
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import uos.teamkernel.model.MapModel;
 import uos.teamkernel.model.MobileRobotModel;
@@ -24,7 +16,7 @@ public class SimMainView extends JFrame implements ModelObserver {
     private final JButton autoManualButton;
     private final MapPanelView mapPanelView;
 
-    public SimMainView(MapModel mapModel, MobileRobotModel robotModel) {
+    public SimMainView(MapModel realMap, MapModel robotMap, MobileRobotModel robotModel) {
         super("MainView");
 
         // Map label
@@ -37,7 +29,7 @@ public class SimMainView extends JFrame implements ModelObserver {
          * Map panel graphical view (draw map and robot) this panel must be repaint when
          * model changed.
          */
-        mapPanelView = new MapPanelView(mapModel, robotModel);
+        mapPanelView = new MapPanelView(realMap, robotMap, robotModel);
         mapPanelView.setAlignmentX(Component.LEFT_ALIGNMENT);
         mapPanelView.setBackground(Color.WHITE);
         mapPanelView.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -80,7 +72,8 @@ public class SimMainView extends JFrame implements ModelObserver {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // register this view as observer of model
-        mapModel.addObserver(this);
+        realMap.addObserver(this);
+        robotMap.addObserver(this);
         robotModel.addObserver(this);
     }
 

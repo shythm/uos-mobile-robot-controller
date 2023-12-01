@@ -40,7 +40,7 @@ public class App {
         }
 
         // Initialize view
-        SimMainView simMainView = new SimMainView(robotMap, robot);
+        SimMainView simMainView = new SimMainView(realMap, robotMap, robot);
 
         // Initialize add-ons
         SimAddOn<Direction> pathPlanner = new PathPlanner(robot.getPosition());
