@@ -31,6 +31,11 @@ public class Map implements MapModel {
     }
 
     public void setSpot(Point position, Spot spot) {
+        if (position == null) {
+            System.out.println("setSpot: Invalid Position (null)");
+            return;
+        }
+
         int x = position.getLocationX();
         int y = position.getLocationY();
         // check if the position is valid
