@@ -26,6 +26,7 @@ dependencies {
     implementation project(':sim-common')
     implementation project(':sim-model')
     implementation project(':sim-view')
+    implementation project(':sim-addon')
 }
 
 application {

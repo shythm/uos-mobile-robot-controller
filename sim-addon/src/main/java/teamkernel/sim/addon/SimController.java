@@ -1,4 +1,4 @@
-package uos.teamkernel.sim;
+package teamkernel.sim.addon;
 
 import java.util.Timer;
 import java.util.TimerTask;

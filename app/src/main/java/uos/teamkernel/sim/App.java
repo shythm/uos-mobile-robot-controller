@@ -1,11 +1,14 @@
 package uos.teamkernel.sim;
 
 import teamkernel.sim.common.Spot;
+import teamkernel.sim.common.Point;
 import teamkernel.sim.model.Map;
 import teamkernel.sim.model.MobileRobot;
 import teamkernel.sim.view.InitDialogForm;
 import teamkernel.sim.view.SimMainView;
-import teamkernel.sim.common.Point;
+import teamkernel.sim.addon.PathPlanner;
+import teamkernel.sim.addon.SimController;
+import teamkernel.sim.addon.VoiceRecognizer;
 
 public class App {
     public static void main(String[] args) {
