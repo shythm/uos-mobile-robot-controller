@@ -1,4 +1,4 @@
-package uos.teamkernel.sim;
+package teamkernel.sim;
 
 import teamkernel.sim.common.Spot;
 import teamkernel.sim.common.Point;
