@@ -5,9 +5,9 @@ import java.util.Queue;
 import java.util.LinkedList;
 
 import java.util.Deque;
-import uos.teamkernel.common.Direction;
-import uos.teamkernel.common.Point;
-import uos.teamkernel.common.Spot;
+import teamkernel.sim.common.Direction;
+import teamkernel.sim.common.Point;
+import teamkernel.sim.common.Spot;
 import uos.teamkernel.model.MapModel;
 import uos.teamkernel.model.MobileRobotModel;
 

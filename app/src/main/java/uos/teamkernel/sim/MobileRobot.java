@@ -1,9 +1,9 @@
 package uos.teamkernel.sim;
 
 import java.util.ArrayList;
-import uos.teamkernel.common.Spot;
-import uos.teamkernel.common.Point;
-import uos.teamkernel.common.Direction;
+import teamkernel.sim.common.Spot;
+import teamkernel.sim.common.Point;
+import teamkernel.sim.common.Direction;
 import uos.teamkernel.model.MobileRobotModel;
 import uos.teamkernel.model.ModelObserver;
 

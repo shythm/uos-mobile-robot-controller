@@ -1,4 +1,4 @@
-package uos.teamkernel.common;
+package teamkernel.sim.common;
 
 public enum Direction {
 

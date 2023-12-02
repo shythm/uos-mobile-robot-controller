@@ -1,8 +1,8 @@
 package uos.teamkernel.sim;
 
-import uos.teamkernel.common.Point;
 import java.util.ArrayList;
-import uos.teamkernel.common.Spot;
+import teamkernel.sim.common.Point;
+import teamkernel.sim.common.Spot;
 import uos.teamkernel.model.MapModel;
 import uos.teamkernel.model.ModelObserver;
 

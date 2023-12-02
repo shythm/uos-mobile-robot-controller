@@ -1,7 +1,7 @@
 package uos.teamkernel.model;
 
-import uos.teamkernel.common.Point;
-import uos.teamkernel.common.Direction;
+import teamkernel.sim.common.Point;
+import teamkernel.sim.common.Direction;
 
 public interface MobileRobotModel extends ModelObservable {
 

@@ -3,9 +3,9 @@ package uos.teamkernel.sim;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import uos.teamkernel.common.Direction;
-import uos.teamkernel.common.Point;
-import uos.teamkernel.common.Spot;
+import teamkernel.sim.common.Direction;
+import teamkernel.sim.common.Point;
+import teamkernel.sim.common.Spot;
 import uos.teamkernel.view.SimMainView;
 
 public class SimController {

@@ -13,8 +13,8 @@ import javax.sound.sampled.DataLine;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.TargetDataLine;
 
-import uos.teamkernel.common.Point;
-import uos.teamkernel.common.Spot;
+import teamkernel.sim.common.Point;
+import teamkernel.sim.common.Spot;
 import uos.teamkernel.model.MapModel;
 
 public class VoiceRecognizer {

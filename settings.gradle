@@ -12,3 +12,4 @@ plugins {
 
 rootProject.name = 'mobile-robot-sim'
 include('app')
+include('sim-common')

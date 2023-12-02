@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.*;
 import javax.imageio.ImageIO;
 
-import uos.teamkernel.common.Point;
+import teamkernel.sim.common.Point;
 import uos.teamkernel.model.MapModel;
 import uos.teamkernel.model.MobileRobotModel;
 

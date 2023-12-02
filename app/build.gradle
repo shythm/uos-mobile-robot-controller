@@ -23,13 +23,7 @@ dependencies {
 
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:32.1.1-jre'
-}
-
-// Apply a specific Java toolchain to ease working on different environments.
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
-    }
+    implementation project(':sim-common')
 }
 
 application {
@@ -42,4 +36,3 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
-[compileJava, compileTestJava]*.options*.encoding='UTF-8'

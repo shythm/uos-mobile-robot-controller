@@ -1,6 +1,6 @@
 package uos.teamkernel.view;
 
-import uos.teamkernel.common.Point;
+import teamkernel.sim.common.Point;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;

@@ -1,7 +1,7 @@
 package uos.teamkernel.model;
 
-import uos.teamkernel.common.Point;
-import uos.teamkernel.common.Spot;
+import teamkernel.sim.common.Point;
+import teamkernel.sim.common.Spot;
 
 public interface MapModel extends ModelObservable {
 

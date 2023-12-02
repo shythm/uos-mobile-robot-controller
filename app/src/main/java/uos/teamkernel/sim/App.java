@@ -1,7 +1,7 @@
 package uos.teamkernel.sim;
 
-import uos.teamkernel.common.Spot;
-import uos.teamkernel.common.Point;
+import teamkernel.sim.common.Spot;
+import teamkernel.sim.common.Point;
 
 import uos.teamkernel.view.InitDialogForm;
 import uos.teamkernel.view.SimMainView;
