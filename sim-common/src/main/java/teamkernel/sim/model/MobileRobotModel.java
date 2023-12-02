@@ -1,4 +1,4 @@
-package uos.teamkernel.model;
+package teamkernel.sim.model;
 
 import teamkernel.sim.common.Point;
 import teamkernel.sim.common.Direction;

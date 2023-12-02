@@ -2,10 +2,10 @@ package uos.teamkernel.sim;
 
 import java.util.ArrayList;
 import teamkernel.sim.common.Spot;
+import teamkernel.sim.model.MobileRobotModel;
+import teamkernel.sim.model.ModelObserver;
 import teamkernel.sim.common.Point;
 import teamkernel.sim.common.Direction;
-import uos.teamkernel.model.MobileRobotModel;
-import uos.teamkernel.model.ModelObserver;
 
 public class MobileRobot implements MobileRobotModel {
 

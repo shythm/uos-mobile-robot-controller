@@ -5,9 +5,9 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-import uos.teamkernel.model.MapModel;
-import uos.teamkernel.model.MobileRobotModel;
-import uos.teamkernel.model.ModelObserver;
+import teamkernel.sim.model.MapModel;
+import teamkernel.sim.model.MobileRobotModel;
+import teamkernel.sim.model.ModelObserver;
 
 public class SimMainView extends JFrame implements ModelObserver {
 

@@ -15,7 +15,7 @@ import javax.sound.sampled.TargetDataLine;
 
 import teamkernel.sim.common.Point;
 import teamkernel.sim.common.Spot;
-import uos.teamkernel.model.MapModel;
+import teamkernel.sim.model.MapModel;
 
 public class VoiceRecognizer {
     private TargetDataLine line;

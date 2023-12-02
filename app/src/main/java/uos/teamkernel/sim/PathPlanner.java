@@ -8,8 +8,8 @@ import java.util.Deque;
 import teamkernel.sim.common.Direction;
 import teamkernel.sim.common.Point;
 import teamkernel.sim.common.Spot;
-import uos.teamkernel.model.MapModel;
-import uos.teamkernel.model.MobileRobotModel;
+import teamkernel.sim.model.MapModel;
+import teamkernel.sim.model.MobileRobotModel;
 
 public class PathPlanner {
     Deque<Point> path;

@@ -10,8 +10,8 @@ import javax.swing.*;
 import javax.imageio.ImageIO;
 
 import teamkernel.sim.common.Point;
-import uos.teamkernel.model.MapModel;
-import uos.teamkernel.model.MobileRobotModel;
+import teamkernel.sim.model.MapModel;
+import teamkernel.sim.model.MobileRobotModel;
 
 public class MapPanelView extends JPanel {
 

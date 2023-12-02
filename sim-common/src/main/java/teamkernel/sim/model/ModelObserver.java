@@ -1,4 +1,4 @@
-package uos.teamkernel.model;
+package teamkernel.sim.model;
 
 public interface ModelObserver {
 

@@ -3,8 +3,8 @@ package uos.teamkernel.sim;
 import java.util.ArrayList;
 import teamkernel.sim.common.Point;
 import teamkernel.sim.common.Spot;
-import uos.teamkernel.model.MapModel;
-import uos.teamkernel.model.ModelObserver;
+import teamkernel.sim.model.MapModel;
+import teamkernel.sim.model.ModelObserver;
 
 public class Map implements MapModel {
 
