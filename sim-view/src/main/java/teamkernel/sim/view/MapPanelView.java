@@ -1,8 +1,7 @@
-package uos.teamkernel.view;
+package teamkernel.sim.view;
 
-import java.io.File;
 import java.io.IOException;
-import java.net.URLDecoder;
+import java.net.URL;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
@@ -60,8 +59,13 @@ public class MapPanelView extends JPanel {
         Image ret = null;
 
         try {
-            String fixedPath = URLDecoder.decode(getClass().getResource(path).getPath(), "UTF-8");
-            BufferedImage bi = ImageIO.read(new File(fixedPath));
+            // String fixedPath = URLDecoder.decode(getClass().getResource(path).getPath(),
+            // "UTF-8");
+            URL resourceUrl = getClass().getResource(path);
+            if (resourceUrl == null) {
+                throw new IOException("Resource not found: " + path);
+            }
+            BufferedImage bi = ImageIO.read(resourceUrl);
             ret = bi.getScaledInstance(distance, distance, Image.SCALE_SMOOTH);
         } catch (IOException e) {
             System.out.println("Image " + path + " not found");

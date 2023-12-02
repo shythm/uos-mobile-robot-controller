@@ -8,7 +8,7 @@ import teamkernel.sim.common.Point;
 import teamkernel.sim.common.Spot;
 import teamkernel.sim.model.Map;
 import teamkernel.sim.model.MobileRobot;
-import uos.teamkernel.view.SimMainView;
+import teamkernel.sim.view.SimMainView;
 
 public class SimController {
 

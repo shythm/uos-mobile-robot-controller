@@ -14,3 +14,4 @@ rootProject.name = 'mobile-robot-sim'
 include('app')
 include('sim-common')
 include('sim-model')
+include('sim-view')

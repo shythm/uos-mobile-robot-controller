@@ -3,10 +3,9 @@ package uos.teamkernel.sim;
 import teamkernel.sim.common.Spot;
 import teamkernel.sim.model.Map;
 import teamkernel.sim.model.MobileRobot;
+import teamkernel.sim.view.InitDialogForm;
+import teamkernel.sim.view.SimMainView;
 import teamkernel.sim.common.Point;
-
-import uos.teamkernel.view.InitDialogForm;
-import uos.teamkernel.view.SimMainView;
 
 public class App {
     public static void main(String[] args) {

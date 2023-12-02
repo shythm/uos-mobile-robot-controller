@@ -1,0 +1,10 @@
+plugins {
+    id 'java'
+}
+
+dependencies {
+    implementation project(':sim-common')
+}
+
+sourceCompatibility = '17'
+targetCompatibility = '17'
