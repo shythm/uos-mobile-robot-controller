@@ -6,6 +6,8 @@ import java.util.TimerTask;
 import teamkernel.sim.common.Direction;
 import teamkernel.sim.common.Point;
 import teamkernel.sim.common.Spot;
+import teamkernel.sim.model.Map;
+import teamkernel.sim.model.MobileRobot;
 import uos.teamkernel.view.SimMainView;
 
 public class SimController {

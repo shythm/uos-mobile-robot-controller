@@ -1,6 +1,8 @@
 package uos.teamkernel.sim;
 
 import teamkernel.sim.common.Spot;
+import teamkernel.sim.model.Map;
+import teamkernel.sim.model.MobileRobot;
 import teamkernel.sim.common.Point;
 
 import uos.teamkernel.view.InitDialogForm;
