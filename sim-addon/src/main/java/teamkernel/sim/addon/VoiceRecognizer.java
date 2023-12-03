@@ -18,17 +18,23 @@ import teamkernel.sim.common.Spot;
 import teamkernel.sim.model.MapModel;
 
 public class VoiceRecognizer {
+    private static VoiceRecognizer instance = new VoiceRecognizer();
+
     private TargetDataLine line;
     private AudioInputStream audioInputStream;
     private File tempFile;
     private Thread recordingThread;
     private String recordedString;
 
-    private VoiceRecognizeAPI voiceRecognizeAPI = new VoiceRecognizeAPI();
+    private VoiceRecognizeAPI voiceRecognizeAPI;
     private boolean startFlag = false;
 
-    public void toggleStartFlag() {
-        startFlag = (!startFlag);
+    private VoiceRecognizer() {
+        voiceRecognizeAPI = new VoiceRecognizeAPI();
+    }
+
+    public static VoiceRecognizer getInstance() {
+        return instance;
     }
 
     private void startRecording() {
@@ -101,23 +107,20 @@ public class VoiceRecognizer {
         return null;
     }
 
-    private void addSpot(MapModel map) {
-        String context = recordedString.substring(9, recordedString.length() - 2);
-        System.out.println("[VOICE] Context: " + context);
-        Spot newSpot = getSpotType(context);
-        Point newPoint = getPoint(context);
-        System.out.println("[VOICE] Parsed: " + newSpot + " " + newPoint);
-        map.setSpot(newPoint, newSpot);
-    }
-
     public boolean call(MapModel map) {
-        toggleStartFlag();
+        startFlag = (!startFlag);
 
         if (startFlag) {
             startRecording();
         } else {
             stopRecording();
-            addSpot(map);
+
+            String context = recordedString.substring(9, recordedString.length() - 2);
+            System.out.println("[VOICE] Context: " + context);
+            Spot newSpot = getSpotType(context);
+            Point newPoint = getPoint(context);
+            System.out.println("[VOICE] Parsed: " + newSpot + " " + newPoint);
+            map.setSpot(newPoint, newSpot);
         }
 
         return startFlag;

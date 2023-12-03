@@ -47,7 +47,7 @@ public class App {
 
         // Initialize add-ons
         PathPlanner pathPlanner = new PathPlanner(robotMap, robot);
-        VoiceRecognizer voiceRecognizer = new VoiceRecognizer();
+        VoiceRecognizer voiceRecognizer = VoiceRecognizer.getInstance();
 
         // Initialize controller
         new SimController(robot, robotMap, simMainView, pathPlanner, voiceRecognizer);
