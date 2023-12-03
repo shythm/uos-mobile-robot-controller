@@ -9,17 +9,22 @@ import java.util.Deque;
 import teamkernel.sim.common.Direction;
 import teamkernel.sim.common.Point;
 import teamkernel.sim.common.Spot;
-import teamkernel.sim.model.MapModel;
+import teamkernel.sim.model.Map;
 import teamkernel.sim.model.MobileRobot;
-import teamkernel.sim.model.MobileRobotModel;
 
 public class PathPlanner {
-    Deque<Point> path;
-    Point nextPosition;
+    private MobileRobot mobileRobot;
+    private Map robotMap;
 
-    public PathPlanner(Point initialPoint) {
+    private Deque<Point> path;
+    private Point nextPosition;
+
+    public PathPlanner(Map robotMap, MobileRobot mobileRobot) {
+        this.mobileRobot = mobileRobot;
+        this.robotMap = robotMap;
+
         path = null;
-        nextPosition = initialPoint;
+        nextPosition = mobileRobot.getPosition();
     }
 
     /**
@@ -28,7 +33,7 @@ public class PathPlanner {
      * @return if there is a closest predefined spot return the point, otherwise
      *         return null
      */
-    private Point getClosestDestinationPoint(MobileRobot mobileRobot, MapModel robotMap) {
+    private Point getClosestDestinationPoint() {
         Point closestPoint = null;
         boolean isFound = false;
         Point mobileRobotPosition = mobileRobot.getPosition();
@@ -61,7 +66,7 @@ public class PathPlanner {
      * 
      * @return the first point on the shortest path
      */
-    private void bfs(MobileRobot mobileRobot, MapModel robotMap, Point startPosition, Point EndPosition) {
+    private void bfs(Point startPosition, Point EndPosition) {
         Queue<Point> queue = new LinkedList<>();
         Point[][] route = new Point[robotMap.getWidth()][robotMap.getHeight()];
         boolean[][] isVisited = new boolean[robotMap.getWidth()][robotMap.getHeight()];
@@ -101,7 +106,7 @@ public class PathPlanner {
      * 
      * @return a direction
      */
-    private Direction CalculateDirection(Point startPoint, Point endPoint) {
+    private Direction calculateDirection(Point startPoint, Point endPoint) {
         if (startPoint == null || endPoint == null) {
             return Direction.UNKNOWN;
         }
@@ -137,8 +142,7 @@ public class PathPlanner {
      * 
      * @return a direction
      */
-    public Direction call(MobileRobotModel mobileRobotModel, MapModel map) {
-        MobileRobot mobileRobot = (MobileRobot)mobileRobotModel;
+    public Direction call() {
         Point currPosition = mobileRobot.getPosition();
         System.out.println("[PATH] Current " + currPosition);
 
@@ -148,23 +152,23 @@ public class PathPlanner {
         }
 
         boolean needToPlan = (path == null) || // 초기 상태
-                (map.getSpot(currPosition) == Spot.PREDEFINED_SPOT_VISITED) || // 방문 지점에 도착한 경우(다음 방문 지점 탐색 필요)
-                (map.getSpot(nextPosition) == Spot.HAZARD); // 로봇이 다음으로 이동할 위치가 위험 지역인 경우
+                (robotMap.getSpot(currPosition) == Spot.PREDEFINED_SPOT_VISITED) || // 방문 지점에 도착한 경우(다음 방문 지점 탐색 필요)
+                (robotMap.getSpot(nextPosition) == Spot.HAZARD); // 로봇이 다음으로 이동할 위치가 위험 지역인 경우
 
         if (needToPlan) {
             System.out.println("[PATH] Need to plan");
-            Point destPoint = getClosestDestinationPoint(mobileRobot, map);
+            Point destPoint = getClosestDestinationPoint();
             if (destPoint == null) {
                 System.out.println("[PATH] No destination");
                 return Direction.UNKNOWN;
             }
             System.out.println("[PATH] Destination " + destPoint);
-            bfs(mobileRobot, map, currPosition, destPoint);
+            bfs(currPosition, destPoint);
             System.out.println("[PATH] The path is " + path);
             nextPosition = getNextPoint();
         }
 
         System.out.println("[PATH] Next " + nextPosition);
-        return CalculateDirection(currPosition, nextPosition);
+        return calculateDirection(currPosition, nextPosition);
     }
 }

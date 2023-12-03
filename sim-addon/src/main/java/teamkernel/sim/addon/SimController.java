@@ -75,7 +75,7 @@ public class SimController {
         }
 
         Direction curr = mobileRobot.getDirection();
-        Direction next = pathPlanner.call(mobileRobot, map);
+        Direction next = pathPlanner.call();
 
         if (next == Direction.UNKNOWN) {
             System.out.println("[STEP] Unknown direction to move");
