@@ -20,3 +20,6 @@ application {
     // Define the main class for the application.
     mainClass = 'teamkernel.sim.App'
 }
+
+sourceCompatibility = '17'
+targetCompatibility = '17'
