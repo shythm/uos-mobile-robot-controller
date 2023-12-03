@@ -87,10 +87,18 @@ public class VoiceRecognizer {
     }
 
     private Spot getSpotType(String context) {
-        if (context.contains("중요")) {
-            return Spot.COLOR_BLOB;
-        } else if (context.contains("위험")) {
-            return Spot.HAZARD;
+        String[] colorBlob = { "중요", "종료" };
+        String[] hazard = { "위험", "위협" };
+
+        for (String str : colorBlob) {
+            if (context.contains(str)) {
+                return Spot.COLOR_BLOB;
+            }
+        }
+        for (String str : hazard) {
+            if (context.contains(str)) {
+                return Spot.HAZARD;
+            }
         }
         return Spot.NONE;
     }
